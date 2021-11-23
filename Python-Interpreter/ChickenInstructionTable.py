@@ -1,9 +1,12 @@
 class ChickenInstructionInfo:
     __slots__=("opcode", "name", "chicken_name")
-    def __init__(self, opcode, name, chicken_name) -> None:
+    def __init__(self, opcode: int, name: str, chicken_name: str) -> None:
         self.opcode = opcode
         self.name = name
         self.chicken_name = chicken_name
+
+    def __str__(self):
+        return str(self.opcode) + '|' + self.chicken_name
 
 CHICKEN_INSTRUCTIONS = [
     ChickenInstructionInfo(0, "exit", "axe"),
@@ -16,5 +19,5 @@ CHICKEN_INSTRUCTIONS = [
     ChickenInstructionInfo(7, "store", "peck"),
     ChickenInstructionInfo(8, "jump", "fr"),
     ChickenInstructionInfo(9, "char", "BBQ"),
-    ChickenInstructionInfo(10, "push", "")
+    ChickenInstructionInfo(10, "push", "wing")
 ]
