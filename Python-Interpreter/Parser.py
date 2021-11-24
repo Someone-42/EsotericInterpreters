@@ -20,6 +20,17 @@ def instructions_to_minichicken(instructions: list, instrcution_infos) -> list:
         l.append(d[arr[0]] + arg)
     return l
 
+def string_to_instruction_list(string: str):
+    instructions = []
+    for s in string.split('\n'):
+        s = s.strip() # Remove junk
+        if s != '':
+            instructions.append(s)
+    return instructions
+
+def instruction_list_to_string(instructions: list):
+    return '\n'.join(instructions)
+
 if __name__=="__main__":
     # Testing stuff
     chicken_code = "chicken chicken chicken\nchicken chicken\nchicken chicken chicken chicken chicken chicken chicken chicken chicken chicken chicken chicken chicken"
@@ -34,5 +45,16 @@ if __name__=="__main__":
         print("Test 3 passed")
         assert instructions_to_minichicken(instrs, t.CHICKEN_INSTRUCTIONS) == mini_chicken
         print("Test 4 passed")
+        instructions = string_to_instruction_list("""
+        chicken
+        chicken
+        push 42
+        add
+        exit
+        """)
+        assert instructions == ["chicken", "chicken", "push 42", "add", "exit"]
+        print("Test 5 passed")
+        assert instruction_list_to_string(instructions) == "chicken\nchicken\npush 42\nadd\nexit"
+        print("Test 6 passed")
     except Exception as e:
         print ("/!\ at least one test failed:", e)
