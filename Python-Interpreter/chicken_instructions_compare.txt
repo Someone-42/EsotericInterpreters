@@ -1,0 +1,155 @@
+// Imagine at the top of the stack, the two values you want to compare [a, b]
+
+//////////////////////////////////////////////////////////////////
+// Stack : [..., a, b]
+// Final Stack : [..., a, b, is_a_greater_than_b]
+// WORKS ONLY FOR INTEGERS
+
+push 0
+push 2
+subtract
+load
+exit        // Copied a : [..., a, b, a]
+
+push 1      // Start the for loop
+add         // Add 1 to a for each iteration [..., a, b, a+n] with n++
+
+push 0
+push 1
+subtract
+load
+exit        // Copied a + n: [..., a, b, a + n, a + n]
+
+push 0
+push 3
+subtract
+load
+exit        // Copied b: [..., a, b, a+n, a+n, b]
+
+compare     // compares b and a + n
+push 16      // Jump out of the loop, to push false (offset) if a == b [..., a, b, a+n, a==b, offset]
+jump        // if a == b then we jump out of the for loop
+
+push 0
+push 1
+subtract
+load
+exit        // Copied a + n: [..., a, b, a + n, a + n]
+
+push 2147483647 // Pushing integer limit [..., a, b, a+n, a+n, int.MAX]
+compare     // If a == int.MAX, b can only be reached by going down
+push 18      // Jump out of loop, and push true
+jump 
+
+push 1      // Push true so we jump back at the beginning of the loop // Stack : [..., a, b, a+n]
+push 0
+push 29     // 4 + n_instructions (the 4 goto instructions, and then how far back we want to go) //Basically an obfuscated GOTO
+subtract
+jump
+
+push 0      // Stack before push : [..., a, b, a+n]
+push 2
+subtract
+load
+exit        // Copied a + n: [..., a, b, a + n, a + n]
+subtract    // Stack : [..., a, b, 0]
+push 1
+add         // Stack : [..., a, b, 1]
+
+push 0      // 0 is false, a < b bc by adding n * 1 to a we reached b // Stack : [..., a, b, 1, 0]
+compare     // Stack : [..., a, b, 0] //successfully removed a+n and put False at the top of the stack
+
+push 1      // Push true (jump condition)
+push 8      // Jump 8 instructions forward to skip over Push True
+jump
+
+push 0      // Stack before push : [..., a, b, a+n]
+push 2
+subtract
+load
+exit        // Copied a + n: [..., a, b, a + n, a + n]
+subtract    // Stack : [..., a, b, 0]
+push 1      
+add         // Succesfully removed a + n and pushed True at the top of the stack
+
+exit        // Exit as in this case there is no more code
+//////////////////////////////////////////////////////////////////
+
+
+
+//////////////////////////////////////////////////////////////////
+// Stack : [..., a, b]
+// Final Stack : [..., a, b, is_a_greater_than_b]
+// WORKS ONLY FOR INTEGERS
+
+//TODO: have another copy of a, and subtract it n, so we can compare it, reducing the time complexity by more than 2
+
+push 0
+push 2
+subtract
+load
+exit        // Copied a : [..., a, b, a]
+
+push 1      // Start the for loop
+add         // Add 1 to a for each iteration [..., a, b, a+n] with n++
+
+push 0
+push 1
+subtract
+load
+exit        // Copied a + n: [..., a, b, a + n, a + n]
+
+push 0
+push 3
+subtract
+load
+exit        // Copied b: [..., a, b, a+n, a+n, b]
+
+compare     // compares b and a + n
+push 16      // Jump out of the loop, to push false (offset) if a == b [..., a, b, a+n, a==b, offset]
+jump        // if a == b then we jump out of the for loop
+
+push 0
+push 1
+subtract
+load
+exit        // Copied a + n: [..., a, b, a + n, a + n]
+
+push 2147483647 // Pushing integer limit [..., a, b, a+n, a+n, int.MAX]
+compare     // If a == int.MAX, b can only be reached by going down
+push 18      // Jump out of loop, and push true
+jump 
+
+push 1      // Push true so we jump back at the beginning of the loop // Stack : [..., a, b, a+n]
+push 0
+push 29     // 4 + n_instructions (the 4 goto instructions, and then how far back we want to go) //Basically an obfuscated GOTO
+subtract
+jump
+
+push 0      // Stack before push : [..., a, b, a+n]
+push 2
+subtract
+load
+exit        // Copied a + n: [..., a, b, a + n, a + n]
+subtract    // Stack : [..., a, b, 0]
+push 1
+add         // Stack : [..., a, b, 1]
+
+push 0      // 0 is false, a < b bc by adding n * 1 to a we reached b // Stack : [..., a, b, 1, 0]
+compare     // Stack : [..., a, b, 0] //successfully removed a+n and put False at the top of the stack
+
+push 1      // Push true (jump condition)
+push 8      // Jump 8 instructions forward to skip over Push True
+jump
+
+push 0      // Stack before push : [..., a, b, a+n]
+push 2
+subtract
+load
+exit        // Copied a + n: [..., a, b, a + n, a + n]
+subtract    // Stack : [..., a, b, 0]
+push 1      
+add         // Succesfully removed a + n and pushed True at the top of the stack
+
+exit        // Exit as in this case there is no more code
+//////////////////////////////////////////////////////////////////
