@@ -43,11 +43,7 @@ class CVM: #Like JVM but for chicken
                 instruction = self.get_next_instruction()
                 if instruction >= 10:
                     self.instruction_set[10](self, instruction - 10)
-                    if debug:
-                        print(iit.CHICKEN_INSTRUCTIONS[10].name, instruction - 10, '   |', self.instruction_index, '|    ', self.stack[-4:])
                 else:
                     self.instruction_set[instruction](self)
-                    if debug:
-                        print(iit.CHICKEN_INSTRUCTIONS[instruction].name, '      |', self.instruction_index, '|    ', self.stack[-4:])
             except Exception as e:
                 print("CHICKEN ERROR", e)
