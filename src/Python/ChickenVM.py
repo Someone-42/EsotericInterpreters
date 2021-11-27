@@ -30,12 +30,14 @@ class CVM: #Like JVM but for chicken
     def exit(self):
         self.instruction_index = len(self.stack)
 
-    def execute(self, minichicken: list):
+    def execute(self, minichicken: list, user_input = None):
         """Executes the given Chicken code"""
         debug = True
         self.instruction_index = len(self.stack) - 1 # Points to the beginning of the added instructions
         self.stack += minichicken[:] # Adds the instructions without modifying the list
         self.stack.append(0)
+        if user_input is not None:
+            self.stack[1] = user_input
         while self.instruction_index < len(self.stack):
             try:
                 instruction = self.get_next_instruction()

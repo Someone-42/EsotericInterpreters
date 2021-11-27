@@ -9,29 +9,32 @@ def chicken(chicken: CVM):
 def add(chicken: CVM):
     roperand = chicken.pop()
     loperand = chicken.pop()
-    chicken.append(loperand + roperand)
+    try:
+        chicken.append(loperand + roperand)
+    except:
+        chicken.append(str(loperand) + str(roperand))
 
 def subtract(chicken: CVM):
-    roperand = chicken.pop()
-    loperand = chicken.pop()
+    roperand = int(chicken.pop())
+    loperand = int(chicken.pop())
     chicken.append(loperand - roperand)
 
 def multiply(chicken: CVM):
-    roperand = chicken.pop()
-    loperand = chicken.pop()
+    roperand = int(chicken.pop())
+    loperand = int(chicken.pop())
     chicken.append(loperand * roperand)
 
 def compare(chicken: CVM):
-    chicken.append(chicken.pop() == chicken.pop())
+    chicken.append(str(chicken.pop()) == str(chicken.pop()))
 
 def load(chicken: CVM):
+    s = 0
     if chicken.get_next_instruction() == 1:
-        chicken.append(input("Chicken (user input required) :"))
-    else:
-        try:
-            chicken.append(chicken.stack[chicken.pop()])
-        except:
-            chicken.append("")
+        s = 1
+    try:
+        chicken.append(chicken.stack[s][chicken.pop()])
+    except:
+        chicken.append("")
 
 def store(chicken: CVM):
     index = chicken.pop()
