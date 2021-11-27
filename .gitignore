@@ -1,2 +1,4 @@
 
 *.pyc
+src/Python/chicken_instructions_basic.txt
+src/Python/chicken_instructions_compare.txt

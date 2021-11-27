@@ -23,6 +23,8 @@ def instructions_to_minichicken(instructions: list, instrcution_infos) -> list:
 def string_to_instruction_list(string: str):
     instructions = []
     for s in string.split('\n'):
+        cmi = s.find("//") # The first index of a comment
+        s = s[:len(s) if cmi == -1 else cmi] # we dont remove anything if there are no comments
         s = s.strip() # Remove junk
         if s != '':
             instructions.append(s)

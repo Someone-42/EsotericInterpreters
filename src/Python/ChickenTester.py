@@ -9,14 +9,31 @@ def hello_world():
     mini_chicken = p.chicken_to_minichicken(f.read())
     vm = CVM(ins.INSTRUCTIONS)
     vm.execute(mini_chicken)
-    print(vm.stack[-1])
+    return vm.stack[-1]
+
+def compare_isgreater(a, b):
+    f = open("ChickenPrograms/is_a_greater_than_b.cki", "r") # You may need to change the path here, as VSC sets the current working directory as root folder
+    
+    mini_chicken = [
+        10 + a,
+        10 + b,
+    ] + p.instructions_to_minichicken(p.string_to_instruction_list(f.read()), ii.CHICKEN_INSTRUCTIONS)
+
+    vm = CVM(ins.INSTRUCTIONS)
+    vm.execute(mini_chicken)
+    
+    return vm.stack[-1]
 
 if __name__ == "__main__": # Tests
 
     try:
         print("Starting Tests :")
-        hello_world()
+        assert hello_world() == "Hello world"
         print("Test 1 passed - Hello world program")
+        assert compare_isgreater(42, 54) == 0
+        print("Test 2 passed")
+        assert compare_isgreater((2 ** 31) - 4, 1) == 1
+        print("Test 3 passed")
         print("All Tests passed !")
     except Exception as e:
         print("/!\\ at least one test failed :", e)

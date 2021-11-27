@@ -1,3 +1,5 @@
+import InstructionInfoTables as iit
+
 class CVM: #Like JVM but for chicken
     __slots__ = ("stack", "instruction_index", "instruction_set")
     def __init__(self, instruction_set):
@@ -30,6 +32,7 @@ class CVM: #Like JVM but for chicken
 
     def execute(self, minichicken: list):
         """Executes the given Chicken code"""
+        debug = True
         self.instruction_index = len(self.stack) - 1 # Points to the beginning of the added instructions
         self.stack += minichicken[:] # Adds the instructions without modifying the list
         self.stack.append(0)
@@ -38,7 +41,11 @@ class CVM: #Like JVM but for chicken
                 instruction = self.get_next_instruction()
                 if instruction >= 10:
                     self.instruction_set[10](self, instruction - 10)
+                    if debug:
+                        print(iit.CHICKEN_INSTRUCTIONS[10].name, instruction - 10, '   |', self.instruction_index, '|    ', self.stack[-4:])
                 else:
                     self.instruction_set[instruction](self)
+                    if debug:
+                        print(iit.CHICKEN_INSTRUCTIONS[instruction].name, '      |', self.instruction_index, '|    ', self.stack[-4:])
             except Exception as e:
                 print("CHICKEN ERROR", e)
