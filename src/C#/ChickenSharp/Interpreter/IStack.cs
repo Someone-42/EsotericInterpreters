@@ -6,11 +6,8 @@ using System.Threading.Tasks;
 
 namespace ChickenSharp
 {
-    public static class TestClass
+    public interface IStack
     {
-        public static void HelloWorld()
-        {
-            Console.WriteLine("Hello world");
-        }
+        
     }
 }

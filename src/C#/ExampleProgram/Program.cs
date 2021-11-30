@@ -6,7 +6,6 @@ namespace ExampleProgram
     {
         static void Main(string[] args)
         {
-            ChickenSharp.TestClass.HelloWorld();
         }
     }
 }
