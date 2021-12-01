@@ -22,6 +22,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -30,6 +31,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -43,11 +45,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ChickenCode.cs" />
-    <Compile Include="Interpreter\IInstructionSet.cs" />
-    <Compile Include="Interpreter\IStack.cs" />
-    <Compile Include="Interpreter\IVM.cs" />
+    <Compile Include="Exceptions\ChickenException.cs" />
+    <Compile Include="Interfaces\Element.cs" />
+    <Compile Include="Interfaces\IInstructionSet.cs" />
+    <Compile Include="Interfaces\IStack.cs" />
+    <Compile Include="Interfaces\IVM.cs" />
+    <Compile Include="Interpreter\ChickenVM.cs" />
+    <Compile Include="Interpreter\Instruction.cs" />
+    <Compile Include="Interpreter\InstructionSet.cs" />
     <Compile Include="Parser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
