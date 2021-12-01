@@ -12,12 +12,12 @@ namespace ChickenSharp
     public class ChickenCode
     {
 
-        public int[,] instructions;
+        public int[][] instructions;
 
         public ChickenCode(int[,] instructions)
         {
-            this.instructions = new int[instructions.GetLength(0), 2];
-            instructions.CopyTo(this.instructions, 0);
+            this.instructions = new int[instructions.GetLength(0)][];
+            instructions.CopyTo(this.instructions, 0); //IM NOT SURE THIS WORKS
         }
 
     }

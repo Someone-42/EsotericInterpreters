@@ -8,11 +8,11 @@ namespace ChickenSharp.Interfaces
 {
     public interface IVM
     {
-        public IStack stack { get; set; }
+        public IStack stack { get; }
 
         public IInstructionSet instructionSet { get; set; }
 
-        public void Execute(ChickenCode code);
+        public void Execute(ChickenCode code, object userInput = null);
 
     }
 }

@@ -11,9 +11,9 @@ namespace ChickenSharp.Interpreter
     {
         public string Name;
 
-        public Action<int, IVM> Method;
+        public Action<int?, IVM> Method;
 
-        public Instruction(string name, Action<int, IVM> method)
+        public Instruction(string name, Action<int?, IVM> method)
         {
             Name = name;
             Method = method;

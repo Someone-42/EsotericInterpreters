@@ -23,7 +23,7 @@ namespace ChickenSharp.Interpreter
             Version = version;
         }
 
-        public void Execute(int instruction, int arg, IVM vm)
+        public void Execute(int instruction, int? arg, IVM vm)
         {
             if (instruction >= Instructions.Length) 
                 throw new ChickenException($"The instruction {instruction} is not compatible with the current InstructionSet");
