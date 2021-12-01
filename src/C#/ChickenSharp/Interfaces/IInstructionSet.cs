@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ChickenSharp.Interpreter;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,7 +10,16 @@ namespace ChickenSharp.Interfaces
     public interface IInstructionSet
     {
 
-        public Action<int>[] instructions { get; set; }
+        /// <summary>
+        /// Name of the Instruction Set
+        /// </summary>
+        public string Name { get; }
+        /// <summary>
+        /// Version of the Instruction Set, can be used to check for compatibility
+        /// </summary>
+        public string Version { get; }
+
+        public Instruction[] Instructions { get; set; }
 
         /// <summary>
         /// Executes the instruction using the VM
