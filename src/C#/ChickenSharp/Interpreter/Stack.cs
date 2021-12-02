@@ -16,12 +16,12 @@ namespace ChickenSharp
 
         public void Extend<T>(T[] elements)
         {
-            stack.AddRange(elements as object[]);
+            stack.AddRange(elements.Cast<object>());
         }
 
         public void Extend<T>(T[] elements, int startIndex)
         {
-            stack.InsertRange(startIndex, elements as object[]);
+            stack.InsertRange(startIndex, elements.Cast<object>());
         }
 
         public object GetAt(int index)
@@ -43,7 +43,7 @@ namespace ChickenSharp
 
         public void Push(object element)
         {
-            stack.Append(element);
+            stack.Add(element);
         }
 
         public void SetAt(int index, object element)

@@ -8,3 +8,5 @@ src/C#/ChickenSharp/obj/*
 src/C#/ChickenSharp/bin/*
 src/C#/ExampleProgram/obj/*
 src/C#/ExampleProgram/bin/*
+src/C#/ChickenSharp.Tests/obj/*
+src/C#/ChickenSharp.Tests/bin/*
