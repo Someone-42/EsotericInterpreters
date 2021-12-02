@@ -14,7 +14,7 @@ namespace ChickenSharp
 
         public int[][] instructions;
 
-        public ChickenCode(int[,] instructions)
+        public ChickenCode(int[][] instructions)
         {
             this.instructions = new int[instructions.GetLength(0)][];
             instructions.CopyTo(this.instructions, 0); //IM NOT SURE THIS WORKS

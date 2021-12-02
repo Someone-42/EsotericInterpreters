@@ -15,13 +15,13 @@ namespace ChickenSharp.Interpreter
 
         private int instructionPointer = 2;
 
-        public ChickenVM(IInstructionSet instructionSet, IStack stack)
+        public ChickenVM(IInstructionSet instructionSet)
         {
             this.instructionSet = instructionSet;
-            this.stack = stack;
+            stack = new Stack();
 
-            this.stack.Insert(this.stack, 0);
-            this.stack.Insert("", 1);
+            stack.Insert(this.stack, 0);
+            stack.Insert("", 1);
         }
 
         public void Execute(ChickenCode code, object userInput = null)
@@ -57,7 +57,6 @@ namespace ChickenSharp.Interpreter
                     throw new ChickenException(e);
                 }
             }
-
         }
     }
 }

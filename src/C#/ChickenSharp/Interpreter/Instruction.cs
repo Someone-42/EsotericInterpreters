@@ -15,7 +15,7 @@ namespace ChickenSharp.Interpreter
 
         public Instruction(string name, Action<int?, IVM> method)
         {
-            Name = name;
+            Name = name.ToLowerInvariant();
             Method = method;
         }
 
