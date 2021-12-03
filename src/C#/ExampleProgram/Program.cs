@@ -6,6 +6,9 @@ namespace ExampleProgram
     {
         static void Main(string[] args)
         {
+
+            ChickenProgram.HelloWorld();
+
         }
     }
 }
