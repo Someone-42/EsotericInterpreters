@@ -13,7 +13,7 @@ namespace ChickenSharp.Interpreter
         public IStack stack { get; }
         public IInstructionSet instructionSet { get; set; }
 
-        private int instructionPointer = 2;
+        public int instructionPointer { get; set; } = 2;
 
         public ChickenVM(IInstructionSet instructionSet)
         {
@@ -50,7 +50,10 @@ namespace ChickenSharp.Interpreter
                     object instructionInfo = GetNextInstruction();
                     if (instructionInfo is int[] ia)
                     {
-                        instructionSet.Execute(ia[0], ia[1], this);
+                        if (ia.Length > 1)
+                            instructionSet.Execute(ia[0], ia[1], this);
+                        else
+                            instructionSet.Execute(ia[0], null, this);
                     }
                     else if (instructionInfo is int i)
                     {
