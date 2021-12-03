@@ -8,7 +8,7 @@ using ChickenSharp.Interpreter;
 
 namespace ExampleProgram
 {
-    public static class ChickenProgram
+    public static class ChickenPrograms
     {
         /// <summary>
         /// Writes hellow world using Chicken
@@ -22,7 +22,7 @@ namespace ExampleProgram
 
             vm.Execute(code);
 
-            Console.WriteLine(vm.stack.Pop());
+            Console.WriteLine(vm.stack.Last());
 
         }
     }

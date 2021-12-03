@@ -60,7 +60,7 @@ namespace ChickenSharp.InstructionSets
             if (loperand is int li && roperand is int ri)
                 vm.stack.Push(li - ri);
             else
-                throw new ChickenException("Cannot subtract 2 strings");
+                throw new ChickenException($"These two types are not subtractable {roperand.GetType()} {roperand} and {loperand.GetType()} {loperand}");
         }
 
         internal static void Multiply(int? arg, IVM vm)

@@ -23,5 +23,7 @@ namespace ChickenSharp.Interfaces
 
         public void Extend<T>(T[] elements, int startIndex);
 
+        public object Last();
+
     }
 }

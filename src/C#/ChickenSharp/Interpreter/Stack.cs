@@ -50,5 +50,11 @@ namespace ChickenSharp
         {
             stack[index] = element;
         }
+
+        public object Last()
+        {
+            return stack.Last();
+        }
+
     }
 }
