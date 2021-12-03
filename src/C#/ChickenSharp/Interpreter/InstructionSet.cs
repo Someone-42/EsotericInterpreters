@@ -16,7 +16,7 @@ namespace ChickenSharp.Interpreter
 
         public string Version { get; protected set; }
 
-        public InstructionSet(Instruction[] instructions, string name, string version)
+        public InstructionSet(string name, string version, Instruction[] instructions)
         {
             Instructions = instructions;
             Name = name;
