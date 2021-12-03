@@ -24,6 +24,11 @@ namespace ChickenSharp.Interpreter
             stack.Insert("", 1);
         }
 
+        public object GetNextInstruction()
+        {
+            return stack.GetAt(instructionPointer++);
+        }
+
         public void Execute(ChickenCode code, object userInput = null)
         {
             //User input
@@ -42,7 +47,7 @@ namespace ChickenSharp.Interpreter
             {
                 try
                 {
-                    object instructionInfo = stack.GetAt(instructionPointer++);
+                    object instructionInfo = GetNextInstruction();
                     if (instructionInfo is int[] ia)
                     {
                         instructionSet.Execute(ia[0], ia[1], this);
@@ -58,5 +63,11 @@ namespace ChickenSharp.Interpreter
                 }
             }
         }
+
+        public void Stop()
+        {
+            instructionPointer = stack.Length;
+        }
+
     }
 }

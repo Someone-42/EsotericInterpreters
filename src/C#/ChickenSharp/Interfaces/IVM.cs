@@ -12,7 +12,14 @@ namespace ChickenSharp.Interfaces
 
         public IInstructionSet instructionSet { get; set; }
 
+        public object GetNextInstruction();
+
         public void Execute(ChickenCode code, object userInput = null);
+
+        /// <summary>
+        /// Stops the execution
+        /// </summary>
+        public void Stop();
 
     }
 }
