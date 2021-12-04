@@ -23,5 +23,18 @@ namespace ChickenSharp.Tests
             Assert.AreEqual(vm.stack.Last(), 42);
 
         }
+
+        [TestMethod]
+        public void CodeWorks2()
+        {
+            ChickenCode code = Parser.CodeFromString("push 65\nchar\nexit", ChickenSharpV1.Set);
+
+            ChickenVM vm = new ChickenVM(ChickenSharpV1.Set);
+
+            vm.Execute(code);
+
+            Assert.AreEqual(vm.stack.Last(), "A");
+
+        }
     }
 }

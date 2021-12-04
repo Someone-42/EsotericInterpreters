@@ -12,7 +12,7 @@ namespace ChickenSharp.InstructionSets
     {
 
         public const string NAME = "CSx11";
-        public const string VERSION = "1.0";
+        public const string VERSION = "1.1"; // Not fully working, some implementations and fixes remain to be done - simplification of code as well
 
         public static IInstructionSet Set = NewSetCopy();
 
@@ -57,10 +57,22 @@ namespace ChickenSharp.InstructionSets
         {
             object roperand = vm.stack.Pop();
             object loperand = vm.stack.Pop();
-            if (loperand is int li && roperand is int ri)
-                vm.stack.Push(li - ri);
+            if (loperand is int li)
+            {
+                if(roperand is int ri)
+                    vm.stack.Push(li - ri);
+                else if (roperand is int[] ria)
+                    vm.stack.Push(li - ria[0] - (ria.Length > 1 ? ria[1] : 0));
+            }
+            else if (loperand is int[] lia)
+            {
+                if (roperand is int ri)
+                    vm.stack.Push(lia[0] + (lia.Length > 1 ? lia[1] : 0) - ri);
+                else if (roperand is int[] ria)
+                    vm.stack.Push(lia[0] - ria[0] - (ria.Length > 1 ? ria[1] : 0) + (lia.Length > 1 ? lia[1] : 0));
+            }
             else
-                throw new ChickenException($"These two types are not subtractable {roperand.GetType()} {roperand} and {loperand.GetType()} {loperand}");
+                throw new ChickenException($"These two types are not subtractable {roperand.GetType()} `{roperand}` and {loperand.GetType()} `{loperand}`");
         }
 
         internal static void Multiply(int? arg, IVM vm)
@@ -69,7 +81,9 @@ namespace ChickenSharp.InstructionSets
             object loperand = vm.stack.Pop();
             if (loperand is int li)
             {
-                if (roperand is int ri)
+                if (roperand is int[] ari)
+                    vm.stack.Push(li * ari.Sum());
+                else if (roperand is int ri)
                     vm.stack.Push(li * ri);
                 else if (roperand is string s)
                     vm.stack.Push(Enumerable.Repeat(s, li));
@@ -96,11 +110,16 @@ namespace ChickenSharp.InstructionSets
 
             try
             {
-                if (loadFrom == 0) 
-                    vm.stack.Push(vm.stack.GetAt((int) vm.stack.Pop())); // User loads from stack, at index pop
+                if (loadFrom == 0)
+                {
+                    int index = (int) vm.stack.Pop();
+                    vm.stack.Push(vm.stack.GetAt(index > 0 ? index : vm.stack.Length - index)); // User loads from stack, at index pop
+                }
                 else
                 {
-                    vm.stack.Push((vm.stack.GetAt(0) as string)[(int)vm.stack.Pop()]); // User wants to load from input, gathering the char -> string[index]
+                    int index = (int)vm.stack.Pop();
+                    string s = vm.stack.GetAt(0) as string;
+                    vm.stack.Push(s[index > 0 ? index : s.Length - index]); // User wants to load from input, gathering the char -> string[index]
                 }
             }
             catch
@@ -135,7 +154,7 @@ namespace ChickenSharp.InstructionSets
         {
             object o = vm.stack.Pop();
             if (o is int i)
-                vm.stack.Push(((char)i).ToString()); // Converting char to string so additions work - or at least less errors
+                vm.stack.Push(((char)i).ToString());
             else if (o is string || o is char) vm.stack.Push(o); // Already a string, we dont do anything
             else
                 throw new ChickenException($"Couldn't convert {o} to char");
