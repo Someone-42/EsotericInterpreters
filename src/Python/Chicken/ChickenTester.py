@@ -7,6 +7,7 @@ def hello_world():
     f = open("ChickenPrograms/chicken_helloworld.ck", "r") # You may need to change the path here, as VSC sets the current working directory as root folder
     
     mini_chicken = p.chicken_to_minichicken(f.read())
+
     vm = CVM(ins.INSTRUCTIONS)
     vm.execute(mini_chicken)
     return vm.stack[-1]
@@ -35,8 +36,6 @@ def chickens99(n):
     return vm.stack[-1]
     
 if __name__ == "__main__": # Tests
-    print(chickens99(9))
-    exit(0)
     try:
         print("Starting Tests :")
         assert hello_world() == "Hello world"
@@ -45,7 +44,7 @@ if __name__ == "__main__": # Tests
         print("Test 2 passed")
         assert compare_isgreater((2 ** 31) - 4, 1) == 1
         print("Test 3 passed")
-        assert chickens99()
+        assert chickens99(42) #stupid test but whatever
         print("Test 4 passed")
         print("All Tests passed !")
     except Exception as e:

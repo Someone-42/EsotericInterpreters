@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <ApplicationIcon />
+    <StartupObject />
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <Authors>Someone-42</Authors>
+    <RepositoryUrl>https://github.com/Someone-42/Chicken-Interpreter</RepositoryUrl>
+    <RootNamespace>ChickenSharp</RootNamespace>
+  </PropertyGroup>
+
+</Project>

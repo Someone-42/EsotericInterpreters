@@ -1,6 +1,12 @@
 
 *.pyc
-src/Python/chicken_instructions_basic.txt
-src/Python/chicken_instructions_compare.txt
 ChickenPrograms/chicken_instructions_basic.txt
 ChickenPrograms/chicken_instructions_compare.txt
+.vs
+.suo
+src/C#/ChickenSharp/obj/*
+src/C#/ChickenSharp/bin/*
+src/C#/ExampleProgram/obj/*
+src/C#/ExampleProgram/bin/*
+src/C#/ChickenSharp.Tests/obj/*
+src/C#/ChickenSharp.Tests/bin/*
