@@ -9,6 +9,14 @@
     <Authors>Someone-42</Authors>
     <RepositoryUrl>https://github.com/Someone-42/Chicken-Interpreter</RepositoryUrl>
     <RootNamespace>ChickenSharp</RootNamespace>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
 
 </Project>
