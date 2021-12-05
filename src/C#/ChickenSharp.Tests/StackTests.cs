@@ -77,5 +77,24 @@ namespace ChickenSharp.Tests
 
         }
 
+        [TestMethod]
+        public void StackLength()
+        {
+            Stack s = new Stack();
+
+            Assert.IsTrue(s.Length == 0);
+
+            s.Push("42");
+            s.Push(42);
+            s.Push("Banana");
+
+            Assert.IsTrue(s.Length == 3);
+
+            s.Pop();
+
+            Assert.IsTrue(s.Length == 2);
+
+        }
+
     }
 }

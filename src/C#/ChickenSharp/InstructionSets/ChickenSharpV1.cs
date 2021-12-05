@@ -98,11 +98,11 @@ namespace ChickenSharp.InstructionSets
             {
                 TryParseStackValue(vm.stack.Pop(), out int index);
                 if (loadFrom == 0)
-                    vm.stack.Push(vm.stack.GetAt(index > 0 ? index : vm.stack.Length - index)); // User loads from stack, at index pop
+                    vm.stack.Push(vm.stack.GetAt(index > 0 ? index : vm.stack.Length + index)); // User loads from stack, at index pop
                 else
                 {
                     string s = vm.stack.GetAt(0) as string;
-                    vm.stack.Push(s[index > 0 ? index : s.Length - index]); // User wants to load from input, gathering the char -> string[index]
+                    vm.stack.Push(s[index > 0 ? index : s.Length + index]); // User wants to load from input, gathering the char -> string[index]
                 }
             }
             catch
