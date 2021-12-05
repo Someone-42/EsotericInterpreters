@@ -12,7 +12,7 @@ namespace ChickenSharp.InstructionSets
     {
 
         public const string NAME = "CSx11";
-        public const string VERSION = "1.1"; // Not fully working, some implementations and fixes remain to be done - simplification of code as well
+        public const string VERSION = "1.2"; // Not fully working, some implementations and fixes remain to be done - simplification of code as well
 
         public static IInstructionSet Set = NewSetCopy();
 

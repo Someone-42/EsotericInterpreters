@@ -20,5 +20,10 @@ namespace ChickenSharp
             instructions.CopyTo(this.instructions, 0); //IM NOT SURE THIS WORKS
         }
 
+        public static ChickenCode operator+ (ChickenCode c, ChickenCode co)
+        {
+            return new ChickenCode(c.instructions.Concat(co.instructions).ToArray());
+        }
+
     }
 }
