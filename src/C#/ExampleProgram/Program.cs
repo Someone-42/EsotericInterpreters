@@ -9,8 +9,8 @@ namespace ExampleProgram
 
             ChickenPrograms.HelloWorld_CSx11();
 
-            ChickenPrograms.CompareAB_CSx11(42, 45);
-            ChickenPrograms.CompareAB_CSx11(int.MaxValue - 3, 1); // For speed reasons :]
+            ChickenPrograms.CompareAB_CSx11(42, 45); // Returns falsy
+            ChickenPrograms.CompareAB_CSx11(int.MaxValue - 3, 1); // For speed reasons :] // Returns truthy
 
         }
     }
