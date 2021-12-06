@@ -9,24 +9,15 @@ namespace ChickenSharp.Tests
         [TestMethod]
         public void StackContainsStuff()
         {
-            Stack s = new Stack();
-            s.Push("42");
-            s.Push(42);
-            s.Push("Banana");
+            Stack s = IStackUtils.Fill(new Stack()) as Stack;
 
-            Assert.IsTrue(s.GetAt(0) as string == "42");
-            Assert.IsTrue((int) s.GetAt(1) == 42);
-            Assert.IsTrue(s.GetAt(2) as string == "Banana");
-
+            Assert.IsTrue(IStackUtils.CheckFill(s));
         }
 
         [TestMethod]
         public void StackExtend()
         {
-            Stack s = new Stack();
-            s.Push("42");
-            s.Push(42);
-            s.Push("Banana");
+            Stack s = IStackUtils.Fill(new Stack()) as Stack;
 
             int i = s.Length;
 
@@ -51,7 +42,7 @@ namespace ChickenSharp.Tests
             int[] array = new int[4] { 4, 2, 6, 9 };
 
             s.Extend(array, 0);
-
+            //Iterate over inserted elements in IStackUtils
             Assert.IsTrue((int)s.GetAt(0) == array[0]);
             Assert.IsTrue((int)s.GetAt(1) == array[1]);
             Assert.IsTrue((int)s.GetAt(2) == array[2]);
