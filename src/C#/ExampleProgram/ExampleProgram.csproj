@@ -4,15 +4,15 @@
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\ChickenSharp\ChickenSharp.csproj" />
-  </ItemGroup>
   
   <ItemGroup>
     <Content Include="../../../ChickenPrograms/*.*">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="..\ChickenSharp\EsotericLanguages.csproj" />
   </ItemGroup>
 
 </Project>

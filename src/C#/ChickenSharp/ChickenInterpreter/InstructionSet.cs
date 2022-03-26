@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ChickenSharp.Exceptions;
-using ChickenSharp.Interfaces;
+using Esoterics.Exceptions;
+using Esoterics.Interfaces;
 
-namespace ChickenSharp.Interpreter
+namespace Esoterics.ChickenInterpreter
 {
     public class InstructionSet : IInstructionSet
     {

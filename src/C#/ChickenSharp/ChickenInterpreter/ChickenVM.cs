@@ -1,12 +1,12 @@
-﻿using ChickenSharp.Interfaces;
+﻿using Esoterics.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ChickenSharp.Exceptions;
+using Esoterics.Exceptions;
 
-namespace ChickenSharp.Interpreter
+namespace Esoterics.ChickenInterpreter
 {
     public class ChickenVM : IVM
     {

@@ -1,7 +1,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 
-namespace ChickenSharp.Tests
+namespace Esoterics.Tests
 {
     [TestClass]
     public class StackTests

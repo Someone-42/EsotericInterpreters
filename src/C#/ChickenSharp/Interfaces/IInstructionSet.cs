@@ -1,11 +1,11 @@
-﻿using ChickenSharp.Interpreter;
+﻿using Esoterics.ChickenInterpreter;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ChickenSharp.Interfaces
+namespace Esoterics.Interfaces
 {
     public interface IInstructionSet
     {

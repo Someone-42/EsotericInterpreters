@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using ChickenSharp.Interfaces;
+using Esoterics.Interfaces;
 
-namespace ChickenSharp.Tests
+namespace Esoterics.Tests
 {
     public static class IStackUtils
     {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ChickenSharp.Exceptions
+namespace Esoterics.Exceptions
 {
     /// <summary>
     /// Represents an Exception occuring in the execution of chicken

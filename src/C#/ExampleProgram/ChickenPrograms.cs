@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using ChickenSharp;
-using ChickenSharp.InstructionSets;
-using ChickenSharp.Interfaces;
-using ChickenSharp.Interpreter;
+using Esoterics;
+using Esoterics.InstructionSets;
+using Esoterics.Interfaces;
+using Esoterics.ChickenInterpreter;
 
 namespace ExampleProgram
 {

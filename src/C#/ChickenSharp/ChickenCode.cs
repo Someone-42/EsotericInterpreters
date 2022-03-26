@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ChickenSharp
+namespace Esoterics
 {
     /// <summary>
     /// Class that can contain ChickenCode as a universal format. Allows for translations.

@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ChickenSharp.Interfaces;
+using Esoterics.Interfaces;
 using System.Linq;
 
-namespace ChickenSharp
+namespace Esoterics
 {
     public class Stack : IStack
     {

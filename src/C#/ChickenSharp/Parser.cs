@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ChickenSharp.Interfaces;
-using ChickenSharp.Interpreter;
+using Esoterics.Interfaces;
+using Esoterics.ChickenInterpreter;
 using System.IO;
 
-namespace ChickenSharp
+namespace Esoterics
 {
     public static class Parser
     {

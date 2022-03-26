@@ -1,12 +1,12 @@
-﻿using ChickenSharp.InstructionSets;
+﻿using Esoterics.InstructionSets;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using ChickenSharp.Interfaces;
-using ChickenSharp.Interpreter;
+using Esoterics.Interfaces;
+using Esoterics.ChickenInterpreter;
 
-namespace ChickenSharp.Tests
+namespace Esoterics.Tests
 {
     [TestClass]
     public class CodeTests

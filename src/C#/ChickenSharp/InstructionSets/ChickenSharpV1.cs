@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using ChickenSharp.Exceptions;
-using ChickenSharp.Interfaces;
-using ChickenSharp.Interpreter;
+using Esoterics.Exceptions;
+using Esoterics.Interfaces;
+using Esoterics.ChickenInterpreter;
 
-namespace ChickenSharp.InstructionSets
+namespace Esoterics.InstructionSets
 {
     public static class ChickenSharpV1
     {

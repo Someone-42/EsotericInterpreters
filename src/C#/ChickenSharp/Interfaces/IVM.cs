@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ChickenSharp.Interfaces
+namespace Esoterics.Interfaces
 {
     public interface IVM
     {
