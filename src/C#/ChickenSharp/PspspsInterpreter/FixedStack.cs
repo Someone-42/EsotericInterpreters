@@ -51,9 +51,18 @@ namespace Esoterics.PspspsInterpreter
             return array[index];
         }
 
+        public void Set(T value, int index)
+        {
+            if (index > pointer || index < 0)
+                throw new ArgumentOutOfRangeException("index");
+            array[index] = value;
+        }
+
+        //TODO: add getat and setat operators like fs[i] = v
+
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return new FixedStackEnumerator<T>(array);
+            return new FixedStackEnumerator<T>(array, pointer);
         }
     }
 }
