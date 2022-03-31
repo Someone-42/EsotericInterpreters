@@ -17,19 +17,19 @@ namespace Esoterics.InstructionSets
         public static IInstructionSet Set = NewSetCopy();
 
         public static IInstructionSet NewSetCopy() => new InstructionSet(NAME, VERSION,
-            new Instruction[11]
+            new ChickenInstruction[11]
             {
-                new Instruction("exit", Exit),
-                new Instruction("chicken", Chicken),
-                new Instruction("add", Add),
-                new Instruction("subtract", Subtract),
-                new Instruction("multiply", Multiply),
-                new Instruction("compare", Compare),
-                new Instruction("load", Load),
-                new Instruction("store", Store),
-                new Instruction("jump", Jump),
-                new Instruction("char", Char),
-                new Instruction("push", Push),
+                new ChickenInstruction("exit", Exit),
+                new ChickenInstruction("chicken", Chicken),
+                new ChickenInstruction("add", Add),
+                new ChickenInstruction("subtract", Subtract),
+                new ChickenInstruction("multiply", Multiply),
+                new ChickenInstruction("compare", Compare),
+                new ChickenInstruction("load", Load),
+                new ChickenInstruction("store", Store),
+                new ChickenInstruction("jump", Jump),
+                new ChickenInstruction("char", Char),
+                new ChickenInstruction("push", Push),
             }
         );
 
