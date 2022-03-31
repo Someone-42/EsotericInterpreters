@@ -19,7 +19,7 @@ namespace Esoterics.Interfaces
         /// </summary>
         public string Version { get; }
 
-        public ChickenInstruction[] Instructions { get; set; }
+        public Instruction[] Instructions { get; set; }
 
         /// <summary>
         /// Executes the instruction using the VM

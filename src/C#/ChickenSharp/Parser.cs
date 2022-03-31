@@ -21,7 +21,7 @@ namespace Esoterics
             string[] lines = s.Split('\n');
             List<int[]> code = new List<int[]>();
 
-            List<ChickenInstruction> instructions = set.Instructions.ToList();
+            List<Instruction> instructions = set.Instructions.ToList();
 
             for (int i = 0; i < lines.Length; i++)
             {

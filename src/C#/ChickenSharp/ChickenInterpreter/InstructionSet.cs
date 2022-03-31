@@ -10,13 +10,13 @@ namespace Esoterics.ChickenInterpreter
 {
     public class InstructionSet : IInstructionSet
     {
-        public ChickenInstruction[] Instructions { get; set; }
+        public Instruction[] Instructions { get; set; }
 
         public string Name { get; protected set; }
 
         public string Version { get; protected set; }
 
-        public InstructionSet(string name, string version, ChickenInstruction[] instructions)
+        public InstructionSet(string name, string version, Instruction[] instructions)
         {
             Instructions = instructions;
             Name = name;

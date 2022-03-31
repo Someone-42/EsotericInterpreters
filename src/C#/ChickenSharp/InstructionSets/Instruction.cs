@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace Esoterics.ChickenInterpreter
 {
-    public struct ChickenInstruction
+    public struct Instruction
     {
         public string Name;
 
         public Action<int?, IVM> Method;
 
-        public ChickenInstruction(string name, Action<int?, IVM> method)
+        public Instruction(string name, Action<int?, IVM> method)
         {
             Name = name.ToLowerInvariant();
             Method = method;
