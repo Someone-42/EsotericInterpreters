@@ -18,7 +18,7 @@ namespace ExampleProgram
 
             ChickenVM vm = new ChickenVM(ChickenSharpV1.Set);
 
-            ChickenCode code = Parser.CodeFromFile("chicken_helloworld.cks", ChickenSharpV1.Set);
+            ChickenCode code = ChickenParser.CodeFromFile("chicken_helloworld.cks", ChickenSharpV1.Set);
 
             vm.Execute(code);
 
@@ -35,8 +35,8 @@ namespace ExampleProgram
 
             ChickenVM vm = new ChickenVM(ChickenSharpV1.Set);
 
-            ChickenCode code = Parser.CodeFromFile("is_a_greater_than_b.cki", ChickenSharpV1.Set);
-            ChickenCode pushABValues = Parser.CodeFromString($"push {a}\npush {b}", ChickenSharpV1.Set); // Push a, b on stack so they can be compared
+            ChickenCode code = ChickenParser.CodeFromFile("is_a_greater_than_b.cki", ChickenSharpV1.Set);
+            ChickenCode pushABValues = ChickenParser.CodeFromString($"push {a}\npush {b}", ChickenSharpV1.Set); // Push a, b on stack so they can be compared
 
             vm.Execute(pushABValues + code);
 

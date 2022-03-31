@@ -9,7 +9,7 @@ using System.IO;
 
 namespace Esoterics
 {
-    public static class Parser
+    public static class ChickenParser
     {
         public static ChickenCode CodeFromFile(string path, IInstructionSet set)
         {

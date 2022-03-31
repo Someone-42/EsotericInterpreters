@@ -14,7 +14,7 @@ namespace Esoterics.Tests
         [TestMethod]
         public void CodeWorks1()
         {
-            ChickenCode code = Parser.CodeFromString("push 24\npush 3\nsubtract\npush 2\nmultiply\nexit", ChickenSharpV1.Set);
+            ChickenCode code = ChickenParser.CodeFromString("push 24\npush 3\nsubtract\npush 2\nmultiply\nexit", ChickenSharpV1.Set);
 
             ChickenVM vm = new ChickenVM(ChickenSharpV1.Set);
 
@@ -27,7 +27,7 @@ namespace Esoterics.Tests
         [TestMethod]
         public void CodeWorks2()
         {
-            ChickenCode code = Parser.CodeFromString("push 65\nchar\nexit", ChickenSharpV1.Set);
+            ChickenCode code = ChickenParser.CodeFromString("push 65\nchar\nexit", ChickenSharpV1.Set);
 
             ChickenVM vm = new ChickenVM(ChickenSharpV1.Set);
 
