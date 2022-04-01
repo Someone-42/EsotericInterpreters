@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Esoterics.Exceptions;
+using Esoterics.InstructionSets;
 using Esoterics.Interfaces;
 
 namespace Esoterics.ChickenInterpreter

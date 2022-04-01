@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Esoterics.Interfaces;
 using Esoterics.ChickenInterpreter;
 using System.IO;
+using Esoterics.InstructionSets;
 
 namespace Esoterics
 {
