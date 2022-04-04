@@ -29,5 +29,7 @@ namespace Esoterics.Interfaces
         /// <param name="arg"></param>
         /// <param name="vm"></param>
         public void Execute(int instruction, int? arg, IVM vm);
+
+        public string GetKey();
     }
 }
