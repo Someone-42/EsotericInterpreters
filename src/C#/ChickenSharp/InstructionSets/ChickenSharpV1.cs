@@ -16,7 +16,7 @@ namespace Esoterics.InstructionSets
 
         public static IInstructionSet Set = NewSetCopy();
 
-        public static IInstructionSet NewSetCopy() => new InstructionSet(NAME, VERSION,
+        public static IInstructionSet NewSetCopy() => new ChickenInstructionSet(NAME, VERSION,
             new Instruction[11]
             {
                 new Instruction("exit", Exit),
@@ -29,7 +29,7 @@ namespace Esoterics.InstructionSets
                 new Instruction("store", Store),
                 new Instruction("jump", Jump),
                 new Instruction("char", Char),
-                new Instruction("push", Push),
+                new Instruction("push", Push)
             }
         );
 
