@@ -7,13 +7,16 @@ namespace Esoterics.PspspsInterpreter
     public class PspspsCode
     {
 
-        public readonly byte[] instructions;
-        public readonly int[] args;
+        public string InstructionSetKey;
 
-        public PspspsCode(byte[] code, int[] args)
+        public readonly byte[] Instructions;
+        public readonly int[] Arguments;
+
+        public PspspsCode(byte[] code, int[] args, string instrKey)
         {
-            instructions = (byte[]) code.Clone();
-            this.args = (int[]) args.Clone();
+            Instructions = (byte[]) code.Clone();
+            Arguments = (int[]) args.Clone();
+            InstructionSetKey = instrKey;
         }
 
     }

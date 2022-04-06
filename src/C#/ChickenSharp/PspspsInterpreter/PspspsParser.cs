@@ -10,13 +10,13 @@ namespace Esoterics.PspspsInterpreter
     public static class PspspsParser
     {
 
-        public static PspspsCode CodeFromString(string code, IInstructionSet instructionSet)
+        public static PspspsCode CodeFromString(string code, PspspsInstructionSet instructionSet)
         {
             string[] sInstructions = code.Split(new char[]{ '\n', ';' }, StringSplitOptions.RemoveEmptyEntries);
             List<byte> instructions = new List<byte>(sInstructions.Length);         // Setting the capacity to the amount of lines, which will pretty much always be enough
             List<int> arguments = new List<int>(sInstructions.Length);
 
-            List<Instruction> set = instructionSet.Instructions.ToList();
+            List<PspspsInstruction> set = instructionSet.Instructions.ToList();
 
             for(int i = 0; i < sInstructions.Length; i++)
             {
@@ -41,7 +41,7 @@ namespace Esoterics.PspspsInterpreter
                 arguments.Add(arg);
             }
 
-            return new PspspsCode(instructions.ToArray(), arguments.ToArray());
+            return new PspspsCode(instructions.ToArray(), arguments.ToArray(), instructionSet.GetKey());
         }
 
     }
