@@ -12,6 +12,11 @@ namespace Esoterics.PspspsInterpreter
 
         public FixedStack<int> Memory;
 
+        #region Runtime
+        public int InstructionPointer;
+        public int[] LabelAddresses;
+        #endregion Runtime
+
         /// <summary>
         /// Creates a new VM that can execute Pspsps Code
         /// </summary>
@@ -23,6 +28,8 @@ namespace Esoterics.PspspsInterpreter
 
         public void Execute(PspspsCode code)
         {
+            if (code.InstructionSetKey != InstructionSet.GetKey())
+                throw new Exception($"Incompatible sets. The code is from the {code.InstructionSetKey} instruction set, whilst the VM is running {InstructionSet.GetKey()}");
 
         }
 
