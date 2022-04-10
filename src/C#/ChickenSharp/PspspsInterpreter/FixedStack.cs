@@ -47,14 +47,14 @@ namespace Esoterics.PspspsInterpreter
         public T Peek(int index)
         {
             if (index > pointer || index < 0)
-                throw new ArgumentOutOfRangeException("index");
+                throw new IndexOutOfRangeException("index");
             return array[index];
         }
 
         public void Set(T value, int index)
         {
             if (index > pointer || index < 0)
-                throw new ArgumentOutOfRangeException("index");
+                throw new IndexOutOfRangeException("index");
             array[index] = value;
         }
 
