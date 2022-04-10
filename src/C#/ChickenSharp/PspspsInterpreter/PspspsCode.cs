@@ -11,11 +11,13 @@ namespace Esoterics.PspspsInterpreter
 
         public readonly byte[] Instructions;
         public readonly int[] Arguments;
+        public readonly int[] LabelAddresses;
 
-        public PspspsCode(byte[] code, int[] args, string instrKey)
+        public PspspsCode(byte[] code, int[] args, int[] labelAddresses, string instrKey)
         {
             Instructions = (byte[]) code.Clone();
             Arguments = (int[]) args.Clone();
+            LabelAddresses = (int[]) labelAddresses.Clone();
             InstructionSetKey = instrKey;
         }
 
