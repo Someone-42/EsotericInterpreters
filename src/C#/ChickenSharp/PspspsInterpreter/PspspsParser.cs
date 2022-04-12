@@ -43,7 +43,8 @@ namespace Esoterics.PspspsInterpreter
             for(int i = 0; i < sInstructions.Length; i++)
             {
                 string sInstruction = sInstructions[i];
-                int ins = -1, arg = 0;
+                int ins = -1;
+                int? arg = null;
 
                 //TODO: Remove comments (//)
                 //TODO: Skip comment only lines or Empty lines
@@ -52,7 +53,7 @@ namespace Esoterics.PspspsInterpreter
                 string[] sInAr = sInstruction.ToLowerInvariant().Trim().Split(' '); // Returns an array, with the instruction to decode, and the argument
                 string sIns = sInAr[0];
                 string sAr = "";                                                    // String instruction
-                if (sInAr.Length > 1 || !(string.IsNullOrEmpty(sInAr[1])))
+                if (sInAr.Length > 1 && !(string.IsNullOrEmpty(sInAr[1])))
                     sAr = sInAr[1];                                                 // String argument
 
                 ins = set.FindIndex(i => i.Name == sIns);
@@ -61,7 +62,7 @@ namespace Esoterics.PspspsInterpreter
                     throw new Exception($"PspspsParser couldn't parse instruction `{sIns}` at line: {i}");
 
                 if (sAr.Length == 0)
-                    arg = 0;
+                    arg = null;
                 else if (ins == instructionSet.LabelInstructionIndex)               // If the current line is a label instruction
                 {
                     if (labelKeys.ContainsKey(sAr))                                 // If the label is already defined
@@ -70,12 +71,15 @@ namespace Esoterics.PspspsInterpreter
                         if (labels[labelIndex] >= 0)                                // If the index of the label doens't exist yet
                             throw new Exception($"The label {sAr} is already defined in the previous lines");
                         labels[labelIndex] = instructions.Count();
+                        arg = labelIndex;
                     }
                     else
                     {
                         labelKeys.Add(sAr, labels.Count());                         // Create the label key if it doens't exist
+                        arg = labels.Count();
                         labels.Add(instructions.Count());                           // Add the label, with index as key, and value being the instruction at which you have to come back
                     }
+                    
                 }
                 else if (ins == instructionSet.GotoInstructionIndex)                // Goto instruction -> the arg has to be the label index
                 {
@@ -95,10 +99,14 @@ namespace Esoterics.PspspsInterpreter
                     arg = instructionSet.ParseArgumentMethod(sAr);
                 }
 
+                if (arg is null && set[ins].SupportsArgument) throw new Exception($"Instruction missing argument on `{set[ins].Name}` instruction, line : {i}");
+                if (!(arg is null) && !set[ins].SupportsArgument) throw new Exception($"The instruction {set[ins].Name} doesnt support arguments, line : {i}");
 
                 instructions.Add((byte)ins);
-                arguments.Add(arg);
+                arguments.Add(arg ?? 0);
             }
+
+            if (labels.Contains(-1)) throw new Exception($"No matching label definition was found for {labels.IndexOf(-1)}");
 
             return new PspspsCode(instructions.ToArray(), arguments.ToArray(), labels.ToArray(), instructionSet.GetKey());
         }
