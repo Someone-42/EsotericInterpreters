@@ -8,11 +8,13 @@ namespace Esoterics.PspspsInterpreter
     {
         public string Name;
         public Action<int, PspspsVM> Method;
+        public bool SupportsArgument;
 
-        public PspspsInstruction(string name, Action<int, PspspsVM> method)
+        public PspspsInstruction(string name, Action<int, PspspsVM> method, bool supportsArgument = false)
         {
             Name = name;
             Method = method;
+            SupportsArgument = supportsArgument;
         }
     }
 }
