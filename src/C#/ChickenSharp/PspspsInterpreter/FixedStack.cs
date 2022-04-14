@@ -62,7 +62,13 @@ namespace Esoterics.PspspsInterpreter
 
         IEnumerator IEnumerable.GetEnumerator()
         {
+            return GetEnumerator();
+        }
+
+        public FixedStackEnumerator<T> GetEnumerator()
+        {
             return new FixedStackEnumerator<T>(array, pointer);
         }
+
     }
 }
