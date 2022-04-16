@@ -12,6 +12,7 @@ namespace ExampleProgram
             ChickenPrograms.CompareAB_CSx11(42, 45); // Returns falsy
             ChickenPrograms.CompareAB_CSx11(int.MaxValue - 3, 1); // For speed reasons :] // Returns truthy
             */
+            PspspsCodeTest.ExampleProgram();
         }
     }
 }
