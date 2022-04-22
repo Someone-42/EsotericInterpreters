@@ -31,3 +31,6 @@ FullNameInstruction	/ instruct.	/ Pspsps Name	| Argument (int) ? | Description
 13. Copy			/ cpy		/ pssp			| X					 // Copies the value at address defined at top of stack
 14. Write			/ wrt		/ pspspsps		| X					 // Writes the value as ascii in the console
 15. Exit			/ ext		/ ssss			| X					 // Exits the program execution
+16. CopyAt			/ cat		/ psspss		| X					 // Copies the value at the stack index (top of stack)
+17. JumpAt			/ jat		/ pppss			| X					 // Sets the instruction pointer to (top of stack) index
+18. CurrentIns		/ cip		/ pppp			| X					 // Pushes the current instruction pointer value to the top of the stack
