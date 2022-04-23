@@ -1,5 +1,4 @@
-﻿using Esoterics.Interfaces;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
@@ -20,9 +19,10 @@ namespace Esoterics.PspspsInterpreter
             if (pspsps.Length > 32)
                 throw new Exception("Cannot parse binary number larger than 32 bits");
             int value = 0;
+            char c;
             for (int i = pspsps.Length - 1; i >= 0; i--)    // Going from Length - 1 to 0 (included)
             {
-                char c = pspsps[i];                         // Looking up string in reverse
+                c = pspsps[i];                         // Looking up string in reverse
                 if (c == 'p')
                     value += 1 << i;                        // Adding the corresponding bit value at position i
             }
@@ -40,21 +40,51 @@ namespace Esoterics.PspspsInterpreter
             Dictionary<string, int> labelKeys = new Dictionary<string, int>();
             List<int> labels = new List<int>();
 
+            bool inMultilineComment = false;
+
             for(int i = 0; i < sInstructions.Length; i++)
             {
                 string sInstruction = sInstructions[i];
                 int ins = -1;
                 int? arg = null;
 
-                //TODO: Remove comments (//)
-                //TODO: Skip comment only lines or Empty lines
-                //TODO: Remove /*multiple line*/ comments
+                #region Comments
+                if (inMultilineComment)
+                {
+                    if (!sInstruction.Contains("*/"))
+                        continue;
+
+                    sInstruction = sInstruction.Substring(sInstruction.IndexOf("*/"));
+
+                }
+
+                if (sInstruction.StartsWith("//")) continue;                        // Skipping if it is a comment
+                else if (sInstruction.StartsWith("/*"))                             // Skipping if it is a multiline comment
+                {
+                    inMultilineComment = true;
+                    continue;
+                }
+
+                string commentBegin = "";
+                if (sInstruction.StartsWith("//")) commentBegin = "//";
+                else if (sInstruction.StartsWith("/*")) commentBegin = "*/";
+
+                if (commentBegin != "") // Removing comment from line
+                {
+                    int commentStart = sInstruction.IndexOf(commentBegin);
+                    if (commentBegin == "/*") inMultilineComment = true;
+                    sInstruction = sInstruction.Substring(0, commentStart);
+                }
+                #endregion Comments
 
                 string[] sInAr = sInstruction.ToLowerInvariant().Trim().Split(' '); // Returns an array, with the instruction to decode, and the argument
                 string sIns = sInAr[0];
+
+                if (string.IsNullOrEmpty(sIns)) continue;                                     // Skipping if there are no instructions
+
                 string sAr = "";                                                    // String instruction
-                if (sInAr.Length > 1 && !(string.IsNullOrEmpty(sInAr[1])))
-                    sAr = sInAr[1];                                                 // String argument
+                if (sInAr.Length > 1 && !(string.IsNullOrEmpty(sInAr[1])))          // Skipping srting argument if it doenst exist
+                    sAr = sInAr[1];                                                 // Getting string argument
 
                 ins = set.FindIndex(i => i.Name == sIns);
 
@@ -63,6 +93,7 @@ namespace Esoterics.PspspsInterpreter
 
                 if (sAr.Length == 0)
                     arg = null;
+                #region LabelAndGoto
                 else if (ins == instructionSet.LabelInstructionIndex)               // If the current line is a label instruction
                 {
                     if (labelKeys.ContainsKey(sAr))                                 // If the label is already defined
@@ -94,13 +125,16 @@ namespace Esoterics.PspspsInterpreter
                         labels.Add(-1);                                             // Add a non defined position of the Label 
                     }
                 }
+                #endregion LabelAndGoto
                 else
                 {
                     arg = instructionSet.ParseArgumentMethod(sAr);
                 }
 
+                #region ArgChecking
                 if (arg is null && set[ins].SupportsArgument) throw new Exception($"Instruction missing argument on `{set[ins].Name}` instruction, line : {i}");
                 if (!(arg is null) && !set[ins].SupportsArgument) throw new Exception($"The instruction {set[ins].Name} doesnt support arguments, line : {i}");
+                #endregion ArgChecking
 
                 instructions.Add((byte)ins);
                 arguments.Add(arg ?? 0);
