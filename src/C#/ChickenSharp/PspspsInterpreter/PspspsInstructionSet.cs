@@ -1,5 +1,4 @@
 ﻿using Esoterics.InstructionSets;
-using Esoterics.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -17,15 +16,24 @@ namespace Esoterics.PspspsInterpreter
         public readonly int LabelInstructionIndex;
         public readonly int GotoInstructionIndex;
 
-        public readonly Func<string, int> ParseArgumentMethod;
+        public readonly int FunctionInstructionIndex;
+        public readonly int ExecuteInstructionIndex;
 
-        public PspspsInstructionSet(string name, string version, PspspsInstruction[] instructions, int labelInstructionIndex, int gotoInstructionIndex, Func<string, int> parseArgumentMethod = null)
+        public Func<string, int> ParseArgumentMethod;
+
+        public PspspsInstructionSet(string name, string version, 
+            PspspsInstruction[] instructions, 
+            int labelInstructionIndex, int gotoInstructionIndex,
+            int functionInstructionIndex, int executeInstructionIndex,
+            Func<string, int> parseArgumentMethod = null)
         {
             Instructions = instructions;
             Name = name;
             Version = version;
             LabelInstructionIndex = labelInstructionIndex;
             GotoInstructionIndex = gotoInstructionIndex;
+            FunctionInstructionIndex = functionInstructionIndex;
+            ExecuteInstructionIndex = executeInstructionIndex;
             if (parseArgumentMethod is null)
                 ParseArgumentMethod = PspspsParser.PspspsBinaryToInt;
             else
