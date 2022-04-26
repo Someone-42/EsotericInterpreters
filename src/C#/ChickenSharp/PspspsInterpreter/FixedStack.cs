@@ -58,6 +58,19 @@ namespace Esoterics.PspspsInterpreter
             array[index] = value;
         }
 
+        public void Extend(int count, T value)
+        {
+            Extend(pointer, count, value);
+        }
+
+        public void Extend(int startIndex, int count, T value)
+        {
+            if (count + startIndex >= Capacity)
+                throw new StackOverflowException("Count goes over the stack capacity");
+            for (int i = 0; i < count; i++)
+                array[startIndex + i] = value;
+        }
+
         //TODO: add getat and setat operators like fs[i] = v
 
         IEnumerator IEnumerable.GetEnumerator()
