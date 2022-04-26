@@ -18,7 +18,7 @@ namespace Esoterics.InstructionSets
             return new PspspsInstructionSet
                 (
                 NAME, VERSION,
-                new PspspsInstruction[22]
+                new PspspsInstruction[27]
                 {
                     new PspspsInstruction("psh", Push, true),
                     new PspspsInstruction("pop", Pop),
@@ -38,15 +38,20 @@ namespace Esoterics.InstructionSets
                     new PspspsInstruction("jat", JumpAt),
                     new PspspsInstruction("cip", CurrentInstructionPointer),
                     new PspspsInstruction("swp", Swap),
-                    new PspspsInstruction("fnc", Function),
+                    new PspspsInstruction("fnc", Function, true),
                     new PspspsInstruction("ret", Return),
-                    new PspspsInstruction("exe", Execute),
+                    new PspspsInstruction("exe", Execute, true),
+                    new PspspsInstruction("chr", WriteChar),
+                    new PspspsInstruction("sat", SetAt),
+                    new PspspsInstruction("all", StackAlloc),
+                    new PspspsInstruction("mod", Modulo),
+                    new PspspsInstruction("set", SetWithOffset),
                     new PspspsInstruction("ext", Exit)
                 },
                 10,
                 9,
-                14,
-                16,
+                18,
+                20,
                 (s) =>
                 {
                     if (int.TryParse(s, out int v))
@@ -79,6 +84,11 @@ namespace Esoterics.InstructionSets
             { "swp", "psppss"   },
             { "fnc", "pspspss"  },
             { "ret", "spspspp"  },
+            { "chr", "pspsspsp" },
+            { "sat", "pspss"    },
+            { "all", "psss"     },
+            { "mod", "psssp"    },
+            { "set", "psppsppsp"},
             { "exe", "sspspsp"  }
         };
 
@@ -124,24 +134,18 @@ namespace Esoterics.InstructionSets
         public static void Compare(int arg, PspspsVM vm)
         {
             int a1 = vm.Memory.Pop(), a2 = vm.Memory.Pop();
-            if (a1 == a2)
-            {
-                vm.Memory.Push(0);
-            }
-            else if (a1 > a2)
-            {
+            if (a1 > a2)
                 vm.Memory.Push(1);
-            }
+            else if (a1 == a2)
+                vm.Memory.Push(0);
             else
-            {
                 vm.Memory.Push(-1);
-            }
         }
 
         public static void Div(int arg, PspspsVM vm)
         {
             int a1 = vm.Memory.Pop(), a2 = vm.Memory.Pop();
-            vm.Memory.Push(a1 / a2);
+            vm.Memory.Push(a2 / a1);
         }
 
         public static void Mul(int arg, PspspsVM vm)
@@ -169,7 +173,7 @@ namespace Esoterics.InstructionSets
         public static void Sub(int arg, PspspsVM vm)
         {
             int a1 = vm.Memory.Pop(), a2 = vm.Memory.Pop();
-            vm.Memory.Push(a1 - a2);
+            vm.Memory.Push(a2 - a1);
         }
 
         public static void Label(int arg, PspspsVM vm) { return; }
@@ -202,10 +206,12 @@ namespace Esoterics.InstructionSets
 
         public static void Swap(int arg, PspspsVM vm)
         {
-            int a1 = vm.Memory.Pop(), a2 = vm.Memory.Pop();
-            int m1 = vm.Memory.Peek(vm.Memory.Count() - a1), m2 = vm.Memory.Peek(vm.Memory.Count() - a2);
-            vm.Memory.Set(a1, m2);
-            vm.Memory.Set(a2, m1);
+            int c = vm.Memory.Count() - 3;
+            int a1 = c - vm.Memory.Pop(), 
+                a2 = c - vm.Memory.Pop();
+            int m1 = vm.Memory.Peek(a1), m2 = vm.Memory.Peek(a2);
+            vm.Memory.Set(m2, a1);
+            vm.Memory.Set(m1, a2);
         }
 
         public static void Function(int arg, PspspsVM vm) { return; }
@@ -219,6 +225,33 @@ namespace Esoterics.InstructionSets
         public static void Return(int arg, PspspsVM vm)
         {
             vm.InstructionPointer = vm.FunctionStack.Pop();
+        }
+
+        public static void WriteChar(int arg, PspspsVM vm)
+        {
+            Console.Write((char)vm.Memory.Pop());
+        }
+
+        public static void StackAlloc(int arg, PspspsVM vm)
+        {
+            vm.Memory.Extend(vm.Memory.Pop(), 0);
+        }
+
+        public static void SetAt(int arg, PspspsVM vm)
+        {
+            vm.Memory.Set(vm.Memory.Pop(), vm.Memory.Pop());
+        }
+
+        public static void Modulo(int arg, PspspsVM vm)
+        {
+            int a1 = vm.Memory.Pop(), a2 = vm.Memory.Pop();
+            vm.Memory.Push(a2 % a1);
+        }
+
+        public static void SetWithOffset(int arg, PspspsVM vm)
+        {
+            int offset = vm.Memory.Count() - vm.Memory.Pop() - 2;
+            vm.Memory.Set(vm.Memory.Pop(), offset);
         }
 
     }
