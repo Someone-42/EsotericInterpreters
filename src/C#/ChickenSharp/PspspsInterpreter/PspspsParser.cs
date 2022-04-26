@@ -39,12 +39,15 @@ namespace Esoterics.PspspsInterpreter
 
             Dictionary<string, int> labelKeys = new Dictionary<string, int>();
             List<int> labels = new List<int>();
+            List<bool> labelIsFunction = new List<bool>();                         // List of bools, indicating if the label in the list, is for a function or a label
 
             bool inMultilineComment = false;
 
             for(int i = 0; i < sInstructions.Length; i++)
             {
-                string sInstruction = sInstructions[i];
+                // I could use state machines for instruction parsing, but im lazy
+
+                string sInstruction = sInstructions[i].ToLowerInvariant().Trim();
                 int ins = -1;
                 int? arg = null;
 
@@ -55,7 +58,6 @@ namespace Esoterics.PspspsInterpreter
                         continue;
 
                     sInstruction = sInstruction.Substring(sInstruction.IndexOf("*/"));
-
                 }
 
                 if (sInstruction.StartsWith("//")) continue;                        // Skipping if it is a comment
@@ -65,6 +67,7 @@ namespace Esoterics.PspspsInterpreter
                     continue;
                 }
 
+                // The whole instruction is a comment
                 string commentBegin = "";
                 if (sInstruction.StartsWith("//")) commentBegin = "//";
                 else if (sInstruction.StartsWith("/*")) commentBegin = "*/";
@@ -73,6 +76,17 @@ namespace Esoterics.PspspsInterpreter
                 {
                     int commentStart = sInstruction.IndexOf(commentBegin);
                     if (commentBegin == "/*") inMultilineComment = true;
+                    continue;
+                }
+
+                string commentType = "";
+                if (sInstruction.Contains("//")) commentType = "//";
+                else if (sInstruction.Contains("/*")) commentType = "*/";
+
+                if (commentType != "") // Removing comment from line
+                {
+                    int commentStart = sInstruction.IndexOf(commentType);
+                    if (commentType == "/*") inMultilineComment = true;
                     sInstruction = sInstruction.Substring(0, commentStart);
                 }
                 #endregion Comments
@@ -80,7 +94,7 @@ namespace Esoterics.PspspsInterpreter
                 string[] sInAr = sInstruction.ToLowerInvariant().Trim().Split(' '); // Returns an array, with the instruction to decode, and the argument
                 string sIns = sInAr[0];
 
-                if (string.IsNullOrEmpty(sIns)) continue;                                     // Skipping if there are no instructions
+                if (string.IsNullOrEmpty(sIns)) continue;                           // Skipping if there are no instructions
 
                 string sAr = "";                                                    // String instruction
                 if (sInAr.Length > 1 && !(string.IsNullOrEmpty(sInAr[1])))          // Skipping srting argument if it doenst exist
@@ -93,14 +107,23 @@ namespace Esoterics.PspspsInterpreter
 
                 if (sAr.Length == 0)
                     arg = null;
-                #region LabelAndGoto
-                else if (ins == instructionSet.LabelInstructionIndex)               // If the current line is a label instruction
+                #region LabelsAndFunctions
+                // If the current line is a label or function definition
+                else if (ins == instructionSet.LabelInstructionIndex || ins == instructionSet.FunctionInstructionIndex)
                 {
+                    bool isFunction = ins == instructionSet.FunctionInstructionIndex;
                     if (labelKeys.ContainsKey(sAr))                                 // If the label is already defined
                     {
-                        int labelIndex = labelKeys[sIns];
+                        int labelIndex = labelKeys[sAr];
                         if (labels[labelIndex] >= 0)                                // If the index of the label doens't exist yet
-                            throw new Exception($"The label {sAr} is already defined in the previous lines");
+                            throw new Exception($"The label or function {sAr} is already defined in the previous lines (Be careful as label and function names are shared)");
+                        // If the label is called from an Execute instruction
+                        if ((!isFunction) && labelIsFunction[labelIndex])
+                            throw new Exception($"The label `{sAr}` is referenced by a function call instruction, label at line: {i} ({set[instructionSet.LabelInstructionIndex].Name})");
+                        // If the function is called from a Goto instruction
+                        if (isFunction && !labelIsFunction[labelIndex])
+                            throw new Exception($"The function `{sAr}` is referenced by a goto instruction, function at line: {i} ({set[instructionSet.FunctionInstructionIndex].Name})");
+
                         labels[labelIndex] = instructions.Count();
                         arg = labelIndex;
                     }
@@ -109,23 +132,34 @@ namespace Esoterics.PspspsInterpreter
                         labelKeys.Add(sAr, labels.Count());                         // Create the label key if it doens't exist
                         arg = labels.Count();
                         labels.Add(instructions.Count());                           // Add the label, with index as key, and value being the instruction at which you have to come back
+                        labelIsFunction.Add(ins == instructionSet.FunctionInstructionIndex);
                     }
                     
                 }
-                else if (ins == instructionSet.GotoInstructionIndex)                // Goto instruction -> the arg has to be the label index
+                // Goto or execute instruction -> the arg has to be the label index
+                else if (ins == instructionSet.GotoInstructionIndex || ins == instructionSet.ExecuteInstructionIndex)
                 {
+                    bool isFunction = ins == instructionSet.ExecuteInstructionIndex;
                     if (labelKeys.ContainsKey(sAr))                                 // If the label is already defined
                     {
-                        arg = labelKeys[sAr];
+                        int labelIndex = labelKeys[sAr];
+                        arg = labelIndex;
+                        // If it's a function label, and it is called by a Goto instruction
+                        if ((!isFunction) && labelIsFunction[labelIndex])
+                            throw new Exception($"The function label `{sAr}` is referenced by a Goto instruction, at line: {i} ({set[instructionSet.GotoInstructionIndex].Name})");
+                        // if it's a label, but it is called by a function execution instruction
+                        if (isFunction && !labelIsFunction[labelIndex])
+                            throw new Exception($"The label `{sAr}` is referenced by a function call instruction, at line: {i} ({set[instructionSet.FunctionInstructionIndex].Name})");
                     }
                     else
                     {
                         labelKeys.Add(sAr, labels.Count());                         // Create the label key if it doens't exist
                         arg = labels.Count();
-                        labels.Add(-1);                                             // Add a non defined position of the Label 
+                        labels.Add(-1);                                             // Add a non defined position of the Label
+                        labelIsFunction.Add(isFunction);
                     }
                 }
-                #endregion LabelAndGoto
+                #endregion LabelsAndFunctions
                 else
                 {
                     arg = instructionSet.ParseArgumentMethod(sAr);
@@ -140,7 +174,7 @@ namespace Esoterics.PspspsInterpreter
                 arguments.Add(arg ?? 0);
             }
 
-            if (labels.Contains(-1)) throw new Exception($"No matching label definition was found for {labels.IndexOf(-1)}");
+            if (labels.Contains(-1)) throw new Exception($"No matching label definition was found for {labelKeys.First(l => l.Value == labels.IndexOf(-1)).Key}");
 
             return new PspspsCode(instructions.ToArray(), arguments.ToArray(), labels.ToArray(), instructionSet.GetKey());
         }
