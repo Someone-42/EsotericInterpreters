@@ -1,0 +1,8 @@
+# lang=PSPSPSx27, version=1.3, memsize4=1024, fss=1024
+exe main
+ext
+
+fnc main
+psh 42
+wrt
+ret
