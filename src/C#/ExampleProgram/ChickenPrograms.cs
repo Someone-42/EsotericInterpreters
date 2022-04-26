@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Esoterics;
 using Esoterics.InstructionSets;
-using Esoterics.Interfaces;
+using Esoterics.ChickenInterfaces;
 using Esoterics.ChickenInterpreter;
 
 namespace ExampleProgram

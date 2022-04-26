@@ -3,7 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Esoterics.Interfaces;
+using Esoterics.ChickenInterfaces;
 using Esoterics.ChickenInterpreter;
 
 namespace Esoterics.Tests

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Esoterics.Exceptions;
 using Esoterics.InstructionSets;
-using Esoterics.Interfaces;
+using Esoterics.ChickenInterfaces;
 
 namespace Esoterics.ChickenInterpreter
 {

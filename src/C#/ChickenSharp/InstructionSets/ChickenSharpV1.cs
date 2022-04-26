@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Esoterics.Exceptions;
-using Esoterics.Interfaces;
+using Esoterics.ChickenInterfaces;
 using Esoterics.ChickenInterpreter;
 
 namespace Esoterics.InstructionSets
