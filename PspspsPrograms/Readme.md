@@ -43,3 +43,4 @@ FullNameInstruction	/ instruct.	/ Pspsps Name	| Argument (int) ? | Description
 25. Modulo			/ mod		/ psssp			| X					 //	Pushes a % b (from [..., a, b])
 26. Set				/ set		/ psppsppsp		| X				     // Sets the value at offset -b to a (from [..., a, b]) 
 27. Exit			/ ext		/ ssss			| X					 // Exits the program execution
+28. MemoryPosition  / mps		/ pssspsppsspsp | X				     // Pushes the current Memory location (The amount of memory used by the program)

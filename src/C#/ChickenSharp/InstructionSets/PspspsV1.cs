@@ -8,8 +8,8 @@ namespace Esoterics.InstructionSets
 {
     public static class PspspsV1
     {
-        public const string NAME = "PSPSPSx18";
-        public const string VERSION = "1.0";
+        public const string NAME = "PSPSPSx27";
+        public const string VERSION = "1.3";
 
         public static PspspsInstructionSet Set => NewSetCopy();
 

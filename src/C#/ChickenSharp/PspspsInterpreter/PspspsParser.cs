@@ -43,7 +43,11 @@ namespace Esoterics.PspspsInterpreter
 
             bool inMultilineComment = false;
 
-            for(int i = 0; i < sInstructions.Length; i++)
+            // TODO: Analyze first line
+            // First line has information regarding the language type and version
+            // Also contains Preffered Memory size and Function stack size
+
+            for(int i = 1; i < sInstructions.Length; i++)
             {
                 // I could use state machines for instruction parsing, but im lazy
 
