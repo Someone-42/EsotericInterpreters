@@ -8,8 +8,8 @@ namespace Esoterics.InstructionSets
 {
     public static class PspspsV1
     {
-        public const string NAME = "PSPSPSx27";
-        public const string VERSION = "1.3";
+        public const string NAME = "PSPSPSx28";
+        public const string VERSION = "1.4";
 
         public static PspspsInstructionSet Set => NewSetCopy();
 
@@ -18,7 +18,7 @@ namespace Esoterics.InstructionSets
             return new PspspsInstructionSet
                 (
                 NAME, VERSION,
-                new PspspsInstruction[27]
+                new PspspsInstruction[28]
                 {
                     new PspspsInstruction("psh", Push, true),
                     new PspspsInstruction("pop", Pop),
@@ -46,6 +46,7 @@ namespace Esoterics.InstructionSets
                     new PspspsInstruction("all", StackAlloc),
                     new PspspsInstruction("mod", Modulo),
                     new PspspsInstruction("set", SetWithOffset),
+                    new PspspsInstruction("mps", MemoryPosition),
                     new PspspsInstruction("ext", Exit)
                 },
                 10,
@@ -57,7 +58,8 @@ namespace Esoterics.InstructionSets
                     if (int.TryParse(s, out int v))
                         return v;
                     throw new Exception($"Couldn't parse integer argument : {s}");
-                }
+                },
+                (i) => i.ToString()
                 );
         }
 
@@ -89,6 +91,7 @@ namespace Esoterics.InstructionSets
             { "all", "psss"     },
             { "mod", "psssp"    },
             { "set", "psppsppsp"},
+            { "mps", "pssspsppsspsp"},
             { "exe", "sspspsp"  }
         };
 
@@ -101,6 +104,7 @@ namespace Esoterics.InstructionSets
                 set.Instructions[i] = new PspspsInstruction(PspspsTranslatedKeywords[instruction.Name], instruction.Method, instruction.SupportsArgument);
             }
             set.ParseArgumentMethod = PspspsParser.PspspsBinaryToInt;
+            set.ReverseParseArgumentMethod = PspspsParser.IntToPspspsBinary;
             return set;
         }
 
@@ -252,6 +256,11 @@ namespace Esoterics.InstructionSets
         {
             int offset = vm.Memory.Count() - vm.Memory.Pop() - 2;
             vm.Memory.Set(vm.Memory.Pop(), offset);
+        }
+
+        public static void MemoryPosition(int arg, PspspsVM vm)
+        {
+            vm.Memory.Push(vm.Memory.Count());
         }
 
     }

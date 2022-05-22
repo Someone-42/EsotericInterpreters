@@ -69,6 +69,7 @@ namespace Esoterics.PspspsInterpreter
                 throw new StackOverflowException("Count goes over the stack capacity");
             for (int i = 0; i < count; i++)
                 array[startIndex + i] = value;
+            pointer += count - (pointer - startIndex);
         }
 
         //TODO: add getat and setat operators like fs[i] = v

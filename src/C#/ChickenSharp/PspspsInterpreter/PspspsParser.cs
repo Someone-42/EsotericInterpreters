@@ -29,6 +29,21 @@ namespace Esoterics.PspspsInterpreter
             return value;
         }
 
+        public static string IntToPspspsBinary(int i)
+        {
+            char[] ps = new char[2] { 's', 'p' };
+            char[] sc = new char[32];
+            int pos = 31;
+            while (i > 0)
+            {
+                sc[pos--] = ps[i & 1];
+                i = i >> 1;
+            }
+            if (pos == 31)
+                return "";
+            return new string(sc, pos + 1, 31 - pos);
+        }
+
         public static PspspsCode CodeFromString(string code, PspspsInstructionSet instructionSet)
         {
             string[] sInstructions = code.Split(new char[]{ '\n', ';' }, StringSplitOptions.RemoveEmptyEntries);

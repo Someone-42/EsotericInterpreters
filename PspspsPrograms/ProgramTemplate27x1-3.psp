@@ -2,7 +2,50 @@
 exe main
 ext
 
+
 fnc main
-psh 42
-wrt
+exe helloworld
+ret
+
+
+fnc helloworld
+// Writes "Hello World!"
+
+// pushing -1 for end of loop
+psh 0
+psh 1
+sub
+
+// Pushing character integer values in reverse
+psh 33
+psh 100
+psh 108
+psh 108
+psh 111
+psh 32
+psh 87
+psh 111
+psh 114
+psh 108
+psh 101
+psh 72
+
+// Pushing size of string
+psh 12
+
+lbl chrhw1
+
+psh 1
+cpy
+psh 0
+psh 1
+sub
+eql
+psh 2
+jmp
+
+chr
+gto chrhw1
+
+pop
 ret

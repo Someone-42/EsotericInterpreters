@@ -20,12 +20,14 @@ namespace Esoterics.PspspsInterpreter
         public readonly int ExecuteInstructionIndex;
 
         public Func<string, int> ParseArgumentMethod;
+        public Func<int, string> ReverseParseArgumentMethod;
 
         public PspspsInstructionSet(string name, string version, 
             PspspsInstruction[] instructions, 
             int labelInstructionIndex, int gotoInstructionIndex,
             int functionInstructionIndex, int executeInstructionIndex,
-            Func<string, int> parseArgumentMethod = null)
+            Func<string, int> parseArgumentMethod = null,
+            Func<int, string> reverseParseArgumentMethod = null)
         {
             Instructions = instructions;
             Name = name;
@@ -38,6 +40,11 @@ namespace Esoterics.PspspsInterpreter
                 ParseArgumentMethod = PspspsParser.PspspsBinaryToInt;
             else
                 ParseArgumentMethod = parseArgumentMethod;
+            if (reverseParseArgumentMethod is null)
+                ReverseParseArgumentMethod = PspspsParser.IntToPspspsBinary;
+            else
+                ReverseParseArgumentMethod = reverseParseArgumentMethod;
+
         }
 
         public void Execute(byte instruction, int arg, PspspsVM vm)
