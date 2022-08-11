@@ -1,0 +1,71 @@
+exe main
+ext
+
+fnc main
+psh 1000000
+exe fib
+wrt
+ret
+
+fnc lesser      // Returns 1 if b < a
+cmp
+psh 0
+psh 1
+sub
+eql
+ret
+
+fnc fib         // Fibonacci using dynamic programming, takes an argument n
+
+psh 1
+cpy
+psh 2
+exe lesser      // Comparing n with 2, if n <= 2, we return 1
+psh 2
+jmp
+psh 1
+ret
+
+psh 2
+sub
+
+psh 1
+cpy
+
+psh 1
+psh 1
+
+lbl fibloop1    // stack : [n, n, a, b]
+
+psh 0
+psh 1
+swp             // Swapping a and b
+
+psh 2
+cpy             // Copying b
+add             // Getting a + b
+
+psh 3
+cpy
+psh 1           // Getting the iteration value of the loop
+sub             // And then removing one
+psh 1
+cpy             // Copying it so we have [n, n - i + 1, a, b, n - i, n - i]
+
+psh 4
+set             // Setting the n - i + 1 to n - i (updating iteration number)
+
+psh 0
+eql             // Comparing the iteration count with 0
+psh 1           // If 0, then we jump to skip the goto, and we finish the program
+jmp
+gto fibloop1    // Stack : [n, n - i, a, b]
+             
+psh 3           // Stack : [n, n - i, a, b] -> adding so we get the final fib number
+psh 0
+swp             // Swapping n and fib(n)
+pop
+pop
+pop             // Removing n and n - i and a
+
+ret

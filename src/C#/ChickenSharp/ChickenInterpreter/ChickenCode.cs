@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Esoterics
+namespace Esoterics.ChickenInterpreter
 {
     /// <summary>
     /// Class that can contain ChickenCode as a universal format. Allows for translations.
@@ -17,7 +17,7 @@ namespace Esoterics
         public ChickenCode(int[][] instructions)
         {
             this.instructions = new int[instructions.GetLength(0)][];
-            instructions.CopyTo(this.instructions, 0); //IM NOT SURE THIS WORKS
+            instructions.CopyTo(this.instructions, 0); //NOW I DO
         }
 
         public static ChickenCode operator+ (ChickenCode c, ChickenCode co)

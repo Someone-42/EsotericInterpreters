@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Esoterics.Interfaces;
-using System.Linq;
+using Esoterics.ChickenInterfaces;
 
 namespace Esoterics
 {

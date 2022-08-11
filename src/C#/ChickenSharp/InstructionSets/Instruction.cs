@@ -1,11 +1,11 @@
-﻿using Esoterics.Interfaces;
+﻿using Esoterics.ChickenInterfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Esoterics.ChickenInterpreter
+namespace Esoterics.InstructionSets
 {
     public struct Instruction
     {

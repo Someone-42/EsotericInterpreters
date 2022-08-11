@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Esoterics.Interfaces;
+using Esoterics.ChickenInterfaces;
 using Esoterics.ChickenInterpreter;
 using System.IO;
+using Esoterics.InstructionSets;
 
 namespace Esoterics
 {
-    public static class Parser
+    public static class ChickenParser
     {
         public static ChickenCode CodeFromFile(string path, IInstructionSet set)
         {

@@ -1,0 +1,105 @@
+# lang=PSPSPSx27, version=1.3, memsize4=1024, fss=1024
+// Imitates java hashing method for strings
+// We suppose the memory is already filled with chars from the string, where each byte of memory is a char
+
+exe Hash
+ext
+
+// Hashes the string in memory (All of the bytes in memory)
+fnc Hash
+
+psh 0
+psh 2
+sub         // Pushes -2, which is used to differentiate the strings from the rest of the memory
+mps         
+psh 1
+sub         // Pushes the size of the string
+psh 0       // Pushes start point for Copy function
+psh 0       // Pushing H (hashing return value)
+
+lbl Hash1Loop
+// Going over every char and modifying H
+
+exe CopyAndRemoveChar
+
+psh 1
+cpy
+psh 0
+psh 1
+sub
+eql
+psh 7
+jmp         // Exiting loop if the character value is -1 (no more characters are found)
+
+psh 0
+psh 1
+swp
+
+psh 31
+mul         // Multiplying H by 31
+
+add         // Adding c to H
+
+gto Hash1Loop
+
+// Exited while loop, clean up memory of string, and put return value H first
+// Stack = [-1, ..., -1, -2, s.length, s.length, H, -1]
+
+psh 0
+psh 3
+cpy
+sat         // Putting H in first position
+
+lbl Hash2Loop
+
+pop
+
+mps
+psh 1
+eql
+psh 1
+jmp
+gto Hash2Loop
+
+ret
+
+// Copies the first non already identified char
+fnc CopyAndRemoveChar
+
+
+psh 1
+
+psh 4
+cpy
+psh 4
+cpy         // Copying current offset in the string and the string length
+
+eql
+sub         // The push 1 and sub function wrap the equality statement, and reverses its result
+psh 4
+jmp         // If we've looked over every character (offset == string.length) we quit
+
+psh 0       // Returning -1 (if no more characters)
+psh 1
+sub
+ret
+
+psh 2       // Copy character
+cpy
+cat
+
+psh 3       // Set character to -1
+cpy
+psh 0
+psh 1
+sub
+sat
+
+psh 3       // Set offset to offset + 1
+cpy
+psh 1
+add
+psh 3
+set
+
+ret         // Return with new character value

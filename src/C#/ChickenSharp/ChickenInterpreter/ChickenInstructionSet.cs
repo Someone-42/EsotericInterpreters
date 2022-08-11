@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Esoterics.Exceptions;
-using Esoterics.Interfaces;
+using Esoterics.InstructionSets;
+using Esoterics.ChickenInterfaces;
 
 namespace Esoterics.ChickenInterpreter
 {
-    public class InstructionSet : IInstructionSet
+    public class ChickenInstructionSet : IInstructionSet
     {
         public Instruction[] Instructions { get; set; }
 
@@ -16,7 +17,7 @@ namespace Esoterics.ChickenInterpreter
 
         public string Version { get; protected set; }
 
-        public InstructionSet(string name, string version, Instruction[] instructions)
+        public ChickenInstructionSet(string name, string version, Instruction[] instructions)
         {
             Instructions = instructions;
             Name = name;
@@ -31,5 +32,11 @@ namespace Esoterics.ChickenInterpreter
             Instructions[instruction].Method(arg, vm);
 
         }
+
+        public string GetKey()
+        {
+            return $"{Name}-{Version.Split('.')[0]}";
+        }
+
     }
 }

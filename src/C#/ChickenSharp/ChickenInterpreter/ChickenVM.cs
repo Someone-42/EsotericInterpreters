@@ -1,4 +1,4 @@
-﻿using Esoterics.Interfaces;
+﻿using Esoterics.ChickenInterfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;

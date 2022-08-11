@@ -1,11 +1,12 @@
 ﻿using Esoterics.ChickenInterpreter;
+using Esoterics.InstructionSets;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Esoterics.Interfaces
+namespace Esoterics.ChickenInterfaces
 {
     public interface IInstructionSet
     {
@@ -28,5 +29,7 @@ namespace Esoterics.Interfaces
         /// <param name="arg"></param>
         /// <param name="vm"></param>
         public void Execute(int instruction, int? arg, IVM vm);
+
+        public string GetKey();
     }
 }

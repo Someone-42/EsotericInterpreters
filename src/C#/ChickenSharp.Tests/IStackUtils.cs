@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Esoterics.Interfaces;
+using Esoterics.ChickenInterfaces;
 
 namespace Esoterics.Tests
 {
