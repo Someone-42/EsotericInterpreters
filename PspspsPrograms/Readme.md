@@ -19,7 +19,7 @@ FullNameInstruction	/ instruct.	/ Pspsps Name	| Argument (int) ? | Description
 1.  Push			/ psh		/ ps			| O					 // Pushes the arg integer on the stack
 2.  Pop				/ pop		/ psp			| X					 // Removes the element on top of the stack
 3.  Equality		/ eql		/ psps			| X					 // Compares 2 top stack elements -> 1 if equals, 0 else
-4.  Compare			/ cmp		/ sp			| X					 // Compares 2 top stack elements (a, b) -> 0 if a == b, 1 if b > a, -1 if b < a
+4.  Compare			/ cmp		/ sp			| X					 // Compares 2 top stack elements (a, b) -> 0 if a == b, 1 if a > b, -1 if a < b
 5.  Add				/ add		/ p				| X					 // Adds 2 top stack elements		(Pushes result)
 6.  Subtract		/ sub		/ s				| X					 // Subtracts 2 top stack elements	(Pushes result) (a - b)
 7.  Multiply		/ mul		/ pp			| X					 // Multiplies 2 top stack elements	(Pushes result)

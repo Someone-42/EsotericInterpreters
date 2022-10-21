@@ -44,6 +44,68 @@ namespace Esoterics.PspspsInterpreter
             return new string(sc, pos + 1, 31 - pos);
         }
 
+        private static string GetMatch(string line, string element)
+        {
+            string res = "";
+
+            int s = line.IndexOf(element + '=');
+
+            if (s == -1)
+                return "42";
+
+            int i = s + element.Length + 1;
+
+            while (i < line.Length && line[i] != ' ' && line[i] != ',')
+            {
+                res += line[i];
+                i++;
+            }
+
+            return res;
+        }
+
+        public static PspspsHeaderSettings GetSettingsFromHeaderLine(string line)
+        {
+            line = line.Trim();
+            if (line[0] != '#')
+                return new PspspsHeaderSettings
+                (
+                    PspspsV1.Set,
+                    PspspsV1.VERSION,
+                    1024,
+                    1024,
+                    "asm",
+                    false
+                );
+
+            string type = GetMatch(line, "type");
+            if (type == "42")
+                type = "asm";
+            if (type != "asm" && type != "psp" && type != "pspsps")
+                throw new Exception($"Pspsps Instruction Set type of `{type}` doesn't exist");
+            return new PspspsHeaderSettings
+            (
+                type == "asm" ? PspspsV1.NewSetCopy() : PspspsV1.GetPspspsPspspsSet(),
+                GetMatch(line, "version"),
+                int.Parse(GetMatch(line, "memsize4")),
+                int.Parse(GetMatch(line, "fss")),
+                type
+            );
+        }
+
+        public static PspspsHeaderSettings GetSettingsFromCodeStringHeader(string code)
+        {
+            string line = "";
+            int i = 0;
+            char c;
+            do
+            {
+                c = code[i++];
+                line += c;
+            } while (i < code.Length && c != '\n');
+            return GetSettingsFromHeaderLine(line);
+        }
+
         public static PspspsCode CodeFromString(string code, PspspsInstructionSet instructionSet)
         {
             string[] sInstructions = code.Split(new char[]{ '\n', ';' }, StringSplitOptions.RemoveEmptyEntries);
@@ -58,9 +120,10 @@ namespace Esoterics.PspspsInterpreter
 
             bool inMultilineComment = false;
 
-            // TODO: Analyze first line
-            // First line has information regarding the language type and version
-            // Also contains Preffered Memory size and Function stack size
+            PspspsHeaderSettings settings = GetSettingsFromHeaderLine(sInstructions[0]);
+
+            if (!settings.HeaderFound)
+                Console.WriteLine("/!\\ Warning : No header was find when parsing the code file, using default values");
 
             for(int i = 1; i < sInstructions.Length; i++)
             {
@@ -122,7 +185,7 @@ namespace Esoterics.PspspsInterpreter
                 ins = set.FindIndex(i => i.Name == sIns);
 
                 if (ins == -1)
-                    throw new Exception($"PspspsParser couldn't parse instruction `{sIns}` at line: {i}");
+                    throw new Exception($"PspspsParser couldn't parse instruction `{sIns}` at line: {i} (Are you using the right set/set type ?)");
 
                 if (sAr.Length == 0)
                     arg = null;
@@ -195,7 +258,7 @@ namespace Esoterics.PspspsInterpreter
 
             if (labels.Contains(-1)) throw new Exception($"No matching label definition was found for {labelKeys.First(l => l.Value == labels.IndexOf(-1)).Key}");
 
-            return new PspspsCode(instructions.ToArray(), arguments.ToArray(), labels.ToArray(), instructionSet.GetKey());
+            return new PspspsCode(instructions.ToArray(), arguments.ToArray(), labels.ToArray(), instructionSet.GetKey(), settings.TargetVersion);
         }
 
     }

@@ -10,3 +10,11 @@ src/C#/ExampleProgram/obj/*
 src/C#/ExampleProgram/bin/*
 src/C#/ChickenSharp.Tests/obj/*
 src/C#/ChickenSharp.Tests/bin/*
+obj/
+bin/
+PspspsPrograms/Console3.psp
+PspspsPrograms/PspspSPspspsPSS.psp
+PspspsPrograms/SommeDesTrucs.psp
+PspspsPrograms/Tests.psp
+src/C\#/ExampleProgram/Tests.psp
+src/Python/Chicken/example.py

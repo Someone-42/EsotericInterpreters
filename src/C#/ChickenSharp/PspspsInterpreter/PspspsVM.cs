@@ -28,17 +28,46 @@ namespace Esoterics.PspspsInterpreter
             InstructionSet = set;
         }
 
+        public PspspsVM(PspspsHeaderSettings settings)
+        {
+            Memory = new FixedStack<int>(settings.MemSize);
+            FunctionStack = new FixedStack<int>(settings.FSS);
+            InstructionSet = settings.InstructionSet;
+        }
+
         public void Execute(PspspsCode code)
         {
             if (code.InstructionSetKey != InstructionSet.GetKey())
                 throw new Exception($"Incompatible sets. The code is from the {code.InstructionSetKey} instruction set, whilst the VM is running {InstructionSet.GetKey()}");
-            
+            else if (code.InstructionSetVersion != InstructionSet.Version)
+                Console.WriteLine($"/!\\ Warning : Code version and Instruction Set versions don't exactly match, there may be unexpected errors/bugs (Code version : {code.InstructionSetVersion}, Set version : {InstructionSet.Version})");
+
             Code = code;                // Initializing
             InstructionPointer = 0;
 
             while (InstructionPointer < code.Instructions.Length)
             {
-                //Debug();
+                InstructionSet.Execute(code.Instructions[InstructionPointer], code.Arguments[InstructionPointer], this);
+                InstructionPointer++;
+                TotalInstructionsExecuted++;
+            }
+
+            InstructionPointer = -1;    // Flushing memory
+            Code = null;
+
+        }
+
+        public void ExecuteDebug(PspspsCode code)
+        {
+            if (code.InstructionSetKey != InstructionSet.GetKey())
+                throw new Exception($"Incompatible sets. The code is from the {code.InstructionSetKey} instruction set, whilst the VM is running {InstructionSet.GetKey()}");
+
+            Code = code;                // Initializing
+            InstructionPointer = 0;
+
+            while (InstructionPointer < code.Instructions.Length)
+            {
+                Debug();
                 InstructionSet.Execute(code.Instructions[InstructionPointer], code.Arguments[InstructionPointer], this);
                 InstructionPointer++;
                 TotalInstructionsExecuted++;
@@ -56,12 +85,12 @@ namespace Esoterics.PspspsInterpreter
             List<string> memString = new List<string>(Memory.Count());
             foreach (int i in Memory)
                 memString.Add(i.ToString());
-            string step = fromInt(TotalInstructionsExecuted, 5); // I assume im never gonna go over 5 digits, which is false
-            string fsc = fromInt(FunctionStack.Count(), 4);
+            string step = fromInt(TotalInstructionsExecuted, 6); // I assume im never gonna go over 6 digits, which is false
+            string fsc = fromInt(FunctionStack.Count(), 3);
             string sip = fromInt(InstructionPointer, 4);
-            string sarg = arg.ToString().Length < 3 ? fromInt(arg, 3) : arg.ToString();
+            string sarg = arg.ToString().Length < 4 ? fromInt(arg, 4) : arg.ToString();
             PspspsInstruction pspspsInstruction = InstructionSet.Instructions[instruction];
-            Console.WriteLine($"STEP {step} FSC[{fsc}] IP[{sip}] : {pspspsInstruction.Name}{(pspspsInstruction.SupportsArgument ? $" {sarg}" : "    ")} | {string.Join(", ", memString)}");
+            Console.WriteLine($"STEP {step}, FSC[{fsc}], IP[{sip}] : {pspspsInstruction.Name}{(pspspsInstruction.SupportsArgument ? $" {sarg}" : "     ")} | {string.Join(", ", memString)}");
 
             string fromInt(long i, int size)
             {
