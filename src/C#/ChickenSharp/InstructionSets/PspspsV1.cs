@@ -210,7 +210,7 @@ namespace Esoterics.InstructionSets
 
         public static void Swap(int arg, PspspsVM vm)
         {
-            int c = vm.Memory.Count() - 3;
+            int c = vm.Memory.Count() - 2;
             int a1 = c - vm.Memory.Pop(), 
                 a2 = c - vm.Memory.Pop();
             int m1 = vm.Memory.Peek(a1), m2 = vm.Memory.Peek(a2);
