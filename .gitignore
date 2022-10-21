@@ -10,3 +10,5 @@ src/C#/ExampleProgram/obj/*
 src/C#/ExampleProgram/bin/*
 src/C#/ChickenSharp.Tests/obj/*
 src/C#/ChickenSharp.Tests/bin/*
+obj/
+bin/
