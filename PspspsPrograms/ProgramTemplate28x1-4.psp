@@ -1,4 +1,4 @@
-# lang=PSPSPSx27, version=1.3, memsize4=1024, fss=1024
+# lang=PSPSPSx28, version=1.4, memsize4=1024, fss=1024
 exe main
 ext
 
@@ -33,6 +33,7 @@ psh 72
 // Pushing size of string
 psh 12
 
+// Writing chars
 lbl chrhw1
 
 psh 1
