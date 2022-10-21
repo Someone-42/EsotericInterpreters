@@ -20,6 +20,22 @@ namespace Esoterics.PspspsInterpreter
 
             return builder.ToString();
         }
+        
+        public static string GetCodeAsText(PspspsCode code, PspspsHeaderSettings settings)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine(settings.GetHeaderString());
+            builder.AppendLine();
+            for (int i = 0; i < code.Instructions.Length; i++)
+            {
+                byte ins = code.Instructions[i];
+                int arg = code.Arguments[i];
+                builder.AppendLine($"{settings.InstructionSet.Instructions[ins].Name} {settings.InstructionSet.ReverseParseArgumentMethod(arg)}");
+            }
+
+            return builder.ToString();
+        
+        }
 
     }
 }
