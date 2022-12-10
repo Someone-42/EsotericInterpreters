@@ -1,4 +1,5 @@
 # Chicken-Interpreter
-An interpreter for chicken
+An interpreter for Esoteric languages
+Supports : PSPSPS, Chicken
 
-Working on this project when bored in class, so i get something to do
+RELI : A console command prompt that allows running of Chicken and PSPSPS programs 
